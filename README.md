@@ -1,47 +1,96 @@
-# Juliano BC Portfolio
+# 🚀 Portfolio Website - Juliano BC
 
-A modern, responsive portfolio website built with Astro.js, featuring:
+> Um portfolio moderno e interativo construído com Astro.js
 
-- 🎨 Modern design with RGB animations
-- 🌓 Dark/Light mode toggle
-- 📱 Fully responsive layout
-- ⚡ Fast performance
-- 🎯 SEO friendly
+[![Deploy with Vercel](https://vercel.com/button)](https://astro-website-n64dld8z0-julianobcs-projects.vercel.app/)
+[![GitHub stars](https://img.shields.io/github/stars/JulianoBC/astro-portfolio?style=social)](https://github.com/JulianoBC/astro-portfolio)
 
-## Live Demo
+## 🌟 Visão Geral
 
-Visit the live website: [Juliano BC Portfolio](https://astro-website-rb7afpmz8-julianobcs-projects.vercel.app)
+Este é meu portfolio profissional, desenvolvido com tecnologias modernas e boas práticas de desenvolvimento. O site apresenta minha experiência, projetos e habilidades como Desenvolvedor FullStack.
 
-## Tech Stack
+### ✨ Features
 
-- [Astro.js](https://astro.build)
-- [Tailwind CSS](https://tailwindcss.com)
-- [Vercel](https://vercel.com)
+- 🎨 Design moderno e responsivo
+- 🌙 Modo escuro/claro
+- ⚡ Performance otimizada
+- 🌐 Preparado para internacionalização
+- 📱 Mobile-first
+- ♿ Acessível
+- 🔍 SEO otimizado
 
-## Development
+## 🛠️ Tecnologias
+
+- [Astro.js](https://astro.build/) - Framework web
+- [Tailwind CSS](https://tailwindcss.com/) - Estilização
+- [TypeScript](https://www.typescriptlang.org/) - Tipagem estática
+- [Vercel](https://vercel.com/) - Hospedagem e deploy
+
+## 🚀 Quick Start
 
 ```bash
-# Install dependencies
+# Clone o repositório
+git clone https://github.com/JulianoBC/astro-portfolio.git
+
+# Entre no diretório
+cd astro-portfolio
+
+# Instale as dependências
 npm install
 
-# Start development server
+# Inicie o servidor de desenvolvimento
 npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
 ```
 
-## Features
+## 📋 Roadmap
 
-- Animated RGB border effects
-- Smooth theme transitions
-- Social media integration
-- Responsive navigation
-- Modern UI components
+O desenvolvimento deste projeto segue um roadmap detalhado que pode ser encontrado em [ROADMAP.md](./ROADMAP.md). Algumas das próximas features incluem:
 
-## License
+### Fase 1 (Em Desenvolvimento)
+- ⚡ Otimização de performance
+- 🔍 Melhorias de SEO
+- 📬 Formulário de contato
+- ♿ Acessibilidade básica
 
-MIT 
+### Fase 2 (Planejado)
+- 📝 Blog com MDX
+- 🌎 Internacionalização
+- 🎨 Portfolio expandido
+- 📊 Analytics
+
+### Fase 3 (Futuro)
+- 🌙 Tema escuro/claro
+- ✨ Animações avançadas
+- 🎮 Gamificação
+- 🤝 Integrações sociais
+
+## 🤝 Contribuindo
+
+Contribuições são sempre bem-vindas! Por favor, leia o [guia de contribuição](./CONTRIBUTING.md) primeiro.
+
+1. Faça um Fork do projeto
+2. Crie sua Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a Branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+## 📝 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](./LICENSE) para mais detalhes.
+
+## 📬 Contato
+
+Juliano BC - [@JulianoBC](https://github.com/JulianoBC)
+
+Project Link: [https://github.com/JulianoBC/astro-portfolio](https://github.com/JulianoBC/astro-portfolio)
+
+## 🙏 Agradecimentos
+
+- [Astro.js](https://astro.build/)
+- [Vercel](https://vercel.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [GitHub](https://github.com/)
+
+---
+
+⭐️ From [JulianoBC](https://github.com/JulianoBC)
