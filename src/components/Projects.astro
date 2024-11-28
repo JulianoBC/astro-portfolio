@@ -37,6 +37,9 @@ const projects: Project[] = [
     preview: false
   }
 ];
+
+import UnderConstruction from './UnderConstruction.astro';
+
 ---
 
 <section class="projects" id="projects">
@@ -46,6 +49,15 @@ const projects: Project[] = [
     <div class="projects-grid">
       {projects.map(project => (
         <div class="project-card">
+          <UnderConstruction 
+            position="absolute" 
+            angle={0} 
+            height={40} 
+            fontSize={1}
+            opacity={0.5}
+            breakOnHover={true}
+            direction="right"
+          />
           <div class="project-preview">
             <img src={project.image} alt={project.title} class="project-image" />
             <div class="project-overlay">
@@ -77,7 +89,8 @@ const projects: Project[] = [
 
 <style>
   .projects {
-    padding: 6rem 2rem;
+    scroll-margin-top: 100px;
+    padding: 4rem 2rem;
     background: var(--bg-secondary);
   }
 
@@ -106,10 +119,10 @@ const projects: Project[] = [
 
   .project-card {
     position: relative;
-    border-radius: 1rem;
     overflow: hidden;
-    background: var(--bg-hover);
-    transition: all 0.3s ease;
+    border-radius: 8px;
+    background: var(--bg-card);
+    transition: transform 0.3s ease;
   }
 
   .project-preview {

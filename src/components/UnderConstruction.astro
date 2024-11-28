@@ -1,0 +1,112 @@
+---
+interface Props {
+  text?: string;
+  position?: 'fixed' | 'absolute';
+  angle?: number;
+  height?: number;
+  fontSize?: number;
+  opacity?: number;
+  breakOnHover?: boolean;
+  direction?: 'left' | 'right';
+}
+
+const { 
+  text = "Em Construção...",
+  position = 'fixed',
+  angle = 35,
+  height = 50,
+  fontSize = 1.2,
+  opacity = 0.9,
+  breakOnHover = false,
+  direction = 'left'
+} = Astro.props;
+---
+
+<div class={`construction-banner ${breakOnHover ? 'break-on-hover' : ''}`} style={`
+  position: ${position};
+  height: ${height}px;
+  font-size: ${fontSize}rem;
+  transform: translateY(-50%) rotate(${angle}deg);
+  background: rgba(255, 200, 0, ${opacity});
+`}>
+  <div class="banner-content" aria-label="Em Construção">
+    <div class={`text-line ${direction}`}>
+      {Array(20).fill(text).join(" ")}
+    </div>
+  </div>
+</div>
+
+<style>
+  .construction-banner {
+    top: 50%;
+    left: -50%;
+    right: -50%;
+    color: #000;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    z-index: 9999;
+    pointer-events: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    border-top: 3px solid #ff0000;
+    border-bottom: 3px solid #ff0000;
+    transition: transform 0.3s ease;
+  }
+
+  .break-on-hover {
+    transition: transform 0.5s ease;
+  }
+
+  :global(.project-card:hover) .break-on-hover {
+    transform: translateY(-50%) rotate(${angle}deg) scale(1.5) !important;
+    opacity: 0;
+    filter: blur(5px);
+  }
+
+  .banner-content {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .text-line {
+    padding: 0 20px;
+  }
+
+  .text-line.left {
+    animation: slideLeft 30s linear infinite;
+  }
+
+  .text-line.right {
+    animation: slideRight 30s linear infinite;
+  }
+
+  @keyframes slideLeft {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes slideRight {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .construction-banner {
+      height: 40px;
+      font-size: 1rem;
+    }
+  }
+</style>
