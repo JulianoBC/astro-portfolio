@@ -20,7 +20,7 @@ const {
 console.log('Social Links:', socialLinks); // Debug log
 ---
 
-<section class="hero">
+<section class="hero" id="top">
   <div class="hero-content">
     <div class="hero-text">
       <div class="profile-image-container">
@@ -158,14 +158,14 @@ console.log('Social Links:', socialLinks); // Debug log
   }
 
   .title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: 2.5rem;
     font-weight: 700;
-    line-height: 1.1;
-    margin: 0 0 1rem;
-    background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent-dark) 100%);
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, #fff, #fff);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: gradientFlow 8s ease infinite;
+    background-clip: text;
+    color: #fff;
+    text-align: center;
   }
 
   .description {
