@@ -3,20 +3,15 @@ import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import { siteConfig } from '../config/site';
 ---
 
-<Layout title="Juliano BC - FullStack Web Developer">
-	<Header title="Juliano BC" />
+<Layout title={`${siteConfig.title} - FullStack Web Developer`}>
+	<Header title={siteConfig.title} />
 	<main>
-		<Hero
-			title="Juliano BC"
-			description="FullStack Web Developer specializing in creating modern, responsive web applications with cutting-edge technologies."
-			socialLinks={{
-				github: "https://github.com/yourusername",
-				linkedin: "https://linkedin.com/in/yourusername",
-				twitter: "https://twitter.com/yourusername"
-			}}
-		/>
+		<Hero />
+		<About />
 	</main>
 </Layout>
 
