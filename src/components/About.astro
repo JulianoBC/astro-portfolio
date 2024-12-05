@@ -1,10 +1,12 @@
 ---
 interface Props {
   title?: string;
+  id?: string;
 }
 
 const { 
-  title = "Sobre Mim"
+  title = "Sobre Mim",
+  id = "about"
 } = Astro.props;
 
 const skills = {
@@ -39,8 +41,9 @@ const skills = {
     <div class="about-content">
       <div class="bio">
         <p class="bio-text">
-          Desenvolvedor Fullstack que transforma curiosidade em código. Meu maior prazer é 
-          aprender coisas novas e aplicar esse conhecimento em soluções reais.
+          Com mais de 2 anos de experiência em desenvolvimento web, encontro na programação a 
+          perfeita combinação entre criatividade e resolução de problemas. Minha jornada é 
+          marcada pela busca constante por código limpo e soluções elegantes.
         </p>
         <p class="bio-text">
           Advogo para tecnologias diretas e objetivas, como o framework AstroJS, que entrega 
