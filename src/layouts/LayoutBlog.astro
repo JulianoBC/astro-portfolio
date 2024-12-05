@@ -1,0 +1,128 @@
+---
+import Header from '../components/Header.astro';
+import { ViewTransitions } from 'astro:transitions';
+import { siteConfig } from '../config/site';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={siteConfig.description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <ViewTransitions />
+  </head>
+  <body class="bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <Header title={siteConfig.title} />
+    
+    <div class="max-w-7xl mx-auto pt-24">
+      <aside class="fixed left-0 top-24 w-64 h-screen hidden lg:block p-6">
+        <nav class="space-y-4">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Categorias</h3>
+          <ul class="space-y-2">
+            <li>
+              <a href="/blog/tag/javascript" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
+                JavaScript
+              </a>
+            </li>
+            <li>
+              <a href="/blog/tag/typescript" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
+                TypeScript
+              </a>
+            </li>
+            <li>
+              <a href="/blog/tag/react" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
+                React
+              </a>
+            </li>
+            <li>
+              <a href="/blog/tag/astro" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
+                Astro
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="mt-12">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Newsletter</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+            Receba atualizações sobre novos posts e conteúdos exclusivos.
+          </p>
+          <form class="space-y-2">
+            <input 
+              type="email" 
+              placeholder="Seu email"
+              class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+            />
+            <button 
+              type="submit"
+              class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+            >
+              Inscrever-se
+            </button>
+          </form>
+        </div>
+      </aside>
+
+      <main class="lg:ml-64">
+        <slot />
+      </main>
+    </div>
+
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      })();
+    
+      if (theme === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+      window.localStorage.setItem('theme', theme);
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg-header: rgba(255, 255, 255, 0.8);
+    --text-primary: #1a202c;
+    --text-secondary: #4a5568;
+    --text-hover: #2563eb;
+    --bg-hover: rgba(37, 99, 235, 0.1);
+  }
+
+  .dark {
+    --bg-header: rgba(17, 24, 39, 0.8);
+    --text-primary: #f7fafc;
+    --text-secondary: #a0aec0;
+    --text-hover: #60a5fa;
+    --bg-hover: rgba(96, 165, 250, 0.1);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-header: rgba(17, 24, 39, 0.8);
+      --text-primary: #f7fafc;
+      --text-secondary: #a0aec0;
+      --text-hover: #60a5fa;
+      --bg-hover: rgba(96, 165, 250, 0.1);
+    }
+  }
+</style> 

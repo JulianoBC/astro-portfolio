@@ -1,0 +1,50 @@
+---
+import LayoutBlog from '../../layouts/LayoutBlog.astro';
+import PostPreview from '../../components/PostPreview.astro';
+import { getCollection } from 'astro:content';
+import { siteConfig } from '../../config/site';
+
+const posts = await getCollection('blog');
+const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<LayoutBlog title={`Blog - ${siteConfig.title}`}>
+  <div class="px-4 sm:px-6 lg:px-8 py-8">
+    <header class="mb-12 text-center">
+      <h1 class="text-5xl font-bold text-gray-900 dark:text-white mb-6">
+        Blog
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Compartilhando conhecimento, experiências e aprendizados sobre desenvolvimento web.
+      </p>
+    </header>
+
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {sortedPosts.map((post) => (
+          <PostPreview
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            tags={post.data.tags}
+            slug={post.slug}
+          />
+        ))}
+      </div>
+
+      {sortedPosts.length === 0 && (
+        <div class="text-center py-12">
+          <p class="text-gray-600 dark:text-gray-400">
+            Nenhum post encontrado. Em breve teremos novos conteúdos!
+          </p>
+        </div>
+      )}
+    </div>
+  </div>
+</LayoutBlog>
+
+<style>
+  article {
+    transition: transform 0.2s ease-in-out;
+  }
+</style> 
