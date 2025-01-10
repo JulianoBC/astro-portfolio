@@ -32,3 +32,119 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
+
+
+
+
+
+
+  .text-content {
+    display: flex;
+ 
+@keyframes rgb-border {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .text-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  
+  .title-caption {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: normal;
+  }
+
+
+
+
+  .theme-toggle {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+  }
+/* Light theme */
+:root,
+.light {
+  --bg-header: #ffffff;
+  --bg-body: #f8fafc;
+  --text-primary: #1a1a1a;
+  --text-secondary: #64748b;
+  --text-hover: #334155;
+  --bg-hover: rgba(0, 0, 0, 0.05);
+}
+
+/* Dark theme */
+.dark {
+  --bg-header: #1a1a1a;
+  --bg-body: #121212;
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --text-hover: #e2e8f0;
+  --bg-hover: rgba(255, 255, 255, 0.1);
+}
+
+/* Smooth transitions when switching themes */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+  scroll-behavior: smooth;
+}
+  --bg-hover: rgba(255, 255, 255, 0.1);
+}
+
+/* Smooth transitions when switching themes */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+ 
+
+ 
+  .title-caption {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: normal;
+  }
+
+  
+  
+
+  .theme-toggle {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+  }
+  

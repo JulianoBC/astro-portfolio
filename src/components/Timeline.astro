@@ -1,0 +1,33 @@
+---
+const timelineData = [
+  { year: '2020', title: 'Job 1', description: 'Description of job 1.' },
+  { year: '2021', title: 'Job 2', description: 'Description of job 2.' },
+  { year: '2022', title: 'Job 3', description: 'Description of job 3.' },
+];
+---
+
+<div class="timeline">
+  {timelineData.map((item) => (
+    <div class="timeline-item">
+      <h3>{item.year} - {item.title}</h3>
+      <p>{item.description}</p>
+    </div>
+  ))}
+</div>
+
+<style>
+.timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-item {
+  margin-bottom: 20px;
+  padding: 15px;
+  border-left: 2px solid #ccc;
+}
+
+.timeline-item h3 {
+  margin-top: 0;
+}
+</style>

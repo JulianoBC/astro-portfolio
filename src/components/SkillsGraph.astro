@@ -1,0 +1,59 @@
+---
+const skillsData = [
+  { name: 'JavaScript', level: 80 },
+  { name: 'React', level: 70 },
+  { name: 'Node.js', level: 60 },
+  { name: 'HTML', level: 90 },
+  { name: 'CSS', level: 85 },
+];
+---
+
+<div class="skills-graph">
+  <h2>Skills</h2>
+  <ul>
+    {skillsData.map((skill) => (
+      <li>
+        <span>{skill.name}</span>
+        <div class="bar-container">
+          <div class="bar" style={`width: ${skill.level}%`}></div>
+        </div>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+.skills-graph {
+  margin-bottom: 20px;
+}
+
+.skills-graph ul {
+  list-style: none;
+  padding: 0;
+}
+
+.skills-graph li {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.skills-graph li span {
+  width: 100px;
+  display: inline-block;
+}
+
+.bar-container {
+  background-color: #f0f0f0;
+  height: 10px;
+  width: 200px;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+.bar {
+  background-color: #007bff;
+  height: 100%;
+  border-radius: 5px;
+}
+</style>

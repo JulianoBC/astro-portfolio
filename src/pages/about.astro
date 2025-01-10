@@ -1,0 +1,17 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Timeline from '../components/Timeline.astro';
+import SkillsGraph from '../components/SkillsGraph.astro';
+import TechGallery from '../components/TechGallery.astro';
+
+const pageTitle = "About Me";
+---
+
+<Layout title={pageTitle}>
+  <main>
+    <h1>{pageTitle}</h1>
+    <Timeline />
+    <SkillsGraph />
+    <TechGallery />
+  </main>
+</Layout>

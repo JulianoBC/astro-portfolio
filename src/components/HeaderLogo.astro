@@ -1,0 +1,111 @@
+---
+interface Props {
+  title?: string;
+}
+
+const { title = "Juliano BC" } = Astro.props;
+---
+
+<div class="logo" >
+      <a href="#top" class="animated-border" >
+        <div class="text-content" >
+          <span class="name" >{title}</span>
+          <span class="title-caption" >FullStack Web Dev</span>
+        </div>
+      </a>
+    </div>
+<style>
+  .logo a {
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 1rem;
+    position: relative;
+  }
+
+  .animated-border {
+    position: relative;
+  }
+  
+
+  .animated-border::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -4px;
+    right: -4px;
+    bottom: -3px;
+    border-radius: 12px;
+    background: linear-gradient(
+      55deg,
+      #ff0000,
+      #ff7300,
+      #fffb00,
+      #48ff00,
+      #00ffd5,
+      #002bff,
+      #7a00ff,
+      #ff00c8,
+      #ff0000
+    );
+    background-size: 500%;
+    z-index: -99;
+    animation: rgb-border 20s linear infinite;
+  }
+  @keyframes rgb-border {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+.animated-border::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--bg-header);
+    border-radius: 6px;
+    z-index: -1;
+  }
+
+
+
+  .logo a:hover {
+    transform: translateY(-5px);
+  }
+  .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+
+  
+
+  
+
+  .text-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  }
+
+</style>

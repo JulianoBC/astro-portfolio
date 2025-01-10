@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import LayoutBlog from '../../layouts/LayoutBlog.astro';
 import { siteConfig } from '../../config/site';
 
@@ -16,69 +16,87 @@ const { Content } = await post.render();
 ---
 
 <LayoutBlog title={`${post.data.title} - ${siteConfig.title}`}>
-  <article class="px-4 sm:px-6 lg:px-8 py-8">
-    <header class="mb-8">
-      <div class="flex gap-2 mb-4">
-        {post.data.tags && post.data.tags.map((tag) => (
-          <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
-            {tag}
-          </span>
-        ))}
-      </div>
-
-      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+  <article class="px-4 sm:px-6 lg:px-8 py-8 prose prose-lg mx-auto bg-surface-2 rounded-lg">
+    <header class="mb-8 text-center">
+      <h1 class="text-4xl font-bold text-primary mb-4">
         {post.data.title}
       </h1>
-
-      <div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+      <div class="flex items-center justify-center gap-4 text-secondary">
         <time datetime={post.data.pubDate.toISOString()}>
           {post.data.pubDate.toLocaleDateString('pt-BR', {
             year: 'numeric',
             month: 'long',
-            day: 'numeric'
+            day: 'numeric',
           })}
         </time>
+        <div class="flex gap-2">
+          {post.data.tags.map((tag) => (
+            <a
+              href={`/blog/tag/${tag}`}
+              class="text-sm bg-surface-1 px-2 py-1 rounded-full hover:bg-hover transition-colors"
+            >
+              #{tag}
+            </a>
+          ))}
+        </div>
       </div>
     </header>
 
-    <div class="prose prose-lg dark:prose-invert max-w-none">
+    <div class="max-w-3xl mx-auto">
       <Content />
     </div>
 
-    <footer class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
-      <a 
-        href="/blog" 
-        class="text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-2"
-      >
-        ← Voltar para o blog
-      </a>
+    <footer class="mt-12 pt-8 border-t border-secondary/20">
+      <div class="flex justify-between items-center">
+        <a
+          href="/blog"
+        >
+          ← Voltar para o blog
+        </a>
+        <div class="flex gap-4">
+          <button
+            aria-label="Compartilhar no Twitter"
+          >
+            Compartilhar
+          </button>
+        </div>
+      </div>
     </footer>
   </article>
 </LayoutBlog>
 
-<style is:global>
+<style>
   .prose {
-    @apply text-gray-900 dark:text-gray-100;
+    max-width: 65ch;
   }
-  .prose a {
-    @apply text-blue-600 dark:text-blue-400 no-underline hover:underline;
+
+  .prose :global(img) {
+    border-radius: 0.5rem;
+    margin: 2rem auto;
+    border: 1px solid var(--border-color);
   }
-  .prose h2, .prose h3, .prose h4 {
-    @apply text-gray-900 dark:text-white scroll-mt-24;
+
+  .prose :global(pre) {
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    background-color: var(--surface-2);
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
   }
-  .prose code {
-    @apply text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded;
+
+  .prose :global(code):not(pre code) {
+    background-color: var(--surface-1);
+    color: var(--text-primary);
+    padding: 0.2em 0.4em;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
   }
-  .prose pre {
-    @apply bg-gray-900 dark:bg-gray-800 text-white p-4 rounded-lg overflow-x-auto;
+
+  .prose :global(p), .prose :global(li) {
+    color: var(--text-secondary);
   }
-  .prose img {
-    @apply rounded-lg shadow-lg;
+
+  .prose :global(h1), .prose :global(h2), .prose :global(h3) {
+    color: var(--text-primary);
   }
-  .prose ul {
-    @apply list-disc list-outside;
-  }
-  .prose ol {
-    @apply list-decimal list-outside;
-  }
-</style> 
+</style>

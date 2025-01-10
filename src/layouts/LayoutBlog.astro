@@ -2,30 +2,41 @@
 import Header from '../components/Header.astro';
 import { ViewTransitions } from 'astro:transitions';
 import { siteConfig } from '../config/site';
-
+import Layout from './Layout.astro';
 interface Props {
   title: string;
+  description?: string;
+  pubDate?: Date;
+  author?: string;
+  image?: string;
 }
 
-const { title } = Astro.props;
+const { title, description, pubDate, author, image } = Astro.props;
+const formattedDate = pubDate?.toLocaleDateString('pt-BR', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
 ---
 
 <!doctype html>
-<html lang="pt-BR" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content={siteConfig.description} />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
-    <ViewTransitions />
+<Layout title={title}>
+  <meta slot="head" name="description" content={description || siteConfig.description} />
+  {pubDate && <meta slot="head" property="article:published_time" content={pubDate.toISOString()} />}
+  {author && <meta slot="head" name="author" content={author} />}
+  {image && <meta slot="head" property="og:image" content={image} />}
+  <meta slot="head" property="og:title" content={title} />
+  <meta slot="head" property="og:description" content={description || siteConfig.description} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="generator" content={Astro.generator} />
+  <title>{title}</title>
+  <ViewTransitions />
   </head>
-  <body class="bg-gray-50 dark:bg-gray-900 min-h-screen">
+  <body class="bg-gray-50 dark:bg-gradient-to-b dark:from-gray-900 dark:to-gray-800 min-h-screen">
     <Header title={siteConfig.title} />
     
-    <div class="max-w-7xl mx-auto pt-24">
-      <aside class="fixed left-0 top-24 w-64 h-screen hidden lg:block p-6">
+    <div class="max-w-7xl mx-auto pt-24 px-4 sm:px-6 lg:px-8">
+      <aside class="fixed left-0 top-24 w-64 h-screen hidden lg:block p-6 dark:bg-gray-800/30 backdrop-blur-sm rounded-r-lg shadow-lg">
         <nav class="space-y-4">
           <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Categorias</h3>
           <ul class="space-y-2">
@@ -61,7 +72,7 @@ const { title } = Astro.props;
             <input 
               type="email" 
               placeholder="Seu email"
-              class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
             />
             <button 
               type="submit"
@@ -76,8 +87,6 @@ const { title } = Astro.props;
       <main class="lg:ml-64">
         <slot />
       </main>
-    </div>
-
     <script is:inline>
       const theme = (() => {
         if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
@@ -96,24 +105,76 @@ const { title } = Astro.props;
       }
       window.localStorage.setItem('theme', theme);
     </script>
-  </body>
-</html>
 
 <style is:global>
+  /* Blog post content styles */
+  .blog-content h1 {
+    @apply text-4xl font-bold mb-6 text-black dark:text-white;
+  }
+  
+  .blog-content h2 {
+    @apply text-3xl font-bold mb-4 mt-8 text-gray-900 dark:text-white;
+  }
+  
+  .blog-content h3 {
+    @apply text-2xl font-bold mb-3 mt-6 text-gray-900 dark:text-white;
+  }
+  
+  .blog-content p {
+    @apply text-lg mb-4 text-gray-700 dark:text-gray-300 leading-relaxed;
+  }
+  
+  .blog-content a {
+    @apply text-blue-600 dark:text-blue-400 hover:underline;
+  }
+  
+  .blog-content ul, .blog-content ol {
+    @apply mb-4 pl-6;
+  }
+  
+  .blog-content ul {
+    @apply list-disc;
+  }
+  
+  .blog-content ol {
+    @apply list-decimal;
+  }
+  
+  .blog-content li {
+    @apply text-lg text-gray-700 dark:text-gray-300 mb-2;
+  }
+  
+  .blog-content pre {
+    @apply bg-gray-100 dark:bg-gray-800/90 p-4 rounded-lg mb-4 overflow-x-auto border border-gray-200 dark:border-gray-700 shadow-md;
+  }
+  
+  .blog-content code {
+    @apply font-mono text-sm;
+  }
+  
+  .blog-content blockquote {
+    @apply border-l-4 border-blue-600 dark:border-blue-400 pl-4 italic my-4;
+  }
+  
+  .blog-content img {
   :root {
-    --bg-header: rgba(255, 255, 255, 0.8);
-    --text-primary: #1a202c;
-    --text-secondary: #4a5568;
+    --bg-header: rgba(255, 255, 255, 0.9);
+    --text-primary: #111827;
+    --text-secondary: #374151;
     --text-hover: #2563eb;
     --bg-hover: rgba(37, 99, 235, 0.1);
-  }
+    --surface-1: #ffffff;
+    --surface-2: #f3f4f6;
+  }}
 
   .dark {
-    --bg-header: rgba(17, 24, 39, 0.8);
-    --text-primary: #f7fafc;
-    --text-secondary: #a0aec0;
+    --bg-header: rgba(17, 24, 39, 0.95);
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
     --text-hover: #60a5fa;
-    --bg-hover: rgba(96, 165, 250, 0.1);
+    --bg-hover: rgba(96, 165, 250, 0.15);
+    --surface-1: #1f2937;
+    --surface-2: #111827;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -125,4 +186,3 @@ const { title } = Astro.props;
       --bg-hover: rgba(96, 165, 250, 0.1);
     }
   }
-</style> 

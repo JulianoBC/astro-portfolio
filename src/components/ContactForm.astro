@@ -1,0 +1,186 @@
+---
+import { validateForm, type FormData, type ValidationError } from '../utils/validation';
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Contact Me" } = Astro.props;
+---
+
+<div class="max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+  <h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white" id="contact-form-title">{title}</h2>
+  <div id="form-status" class="mb-6 hidden" role="status" aria-live="polite"></div>
+  <form id="contact-form" class="space-y-6" aria-labelledby="contact-form-title" novalidate>
+    <div class="space-y-2">
+      <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        Name
+      </label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        required
+        class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-colors"
+        aria-describedby="name-error"
+      />
+      <p id="name-error" class="text-red-600 dark:text-red-400 text-sm hidden"></p>
+    </div>
+
+    <div class="space-y-2">
+      <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        Email
+      </label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        required
+        class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-colors"
+        aria-describedby="email-error"
+      />
+      <p id="email-error" class="text-red-600 dark:text-red-400 text-sm hidden"></p>
+    </div>
+
+    <div class="space-y-2">
+      <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        Message
+      </label>
+      <textarea
+        id="message"
+        name="message"
+        rows="4"
+        required
+        class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-colors resize-none"
+        aria-describedby="message-error"
+      ></textarea>
+      <p id="message-error" class="text-red-600 dark:text-red-400 text-sm hidden"></p>
+    </div>
+
+    <div class="flex items-center justify-end space-x-4">
+      <div id="loading-spinner" class="hidden">
+        <svg class="animate-spin h-5 w-5 text-blue-600 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      </div>
+      <button
+        type="submit"
+        class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled={false}
+        aria-label="Send message"
+      >
+        Send Message
+      </button>
+    </div>
+  </form>
+</div>
+
+<script>
+  interface FormElements extends HTMLFormControlsCollection {
+    name: HTMLInputElement;
+    email: HTMLInputElement;
+    message: HTMLTextAreaElement;
+  }
+
+  interface ContactFormElement extends HTMLFormElement {
+    elements: FormElements;
+  }
+
+  const form = document.getElementById('contact-form') as ContactFormElement;
+  const submitButton = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
+  const loadingSpinner = document.getElementById('loading-spinner');
+  const formStatus = document.getElementById('form-status');
+
+  function showStatus(message: string, type: 'success' | 'error') {
+    if (formStatus) {
+      formStatus.textContent = message;
+      formStatus.classList.remove('hidden');
+      formStatus.classList.remove('text-green-600', 'text-red-600');
+      formStatus.classList.add(type === 'success' ? 'text-green-600' : 'text-red-600');
+    }
+  }
+
+  function clearStatus() {
+    if (formStatus) {
+      formStatus.textContent = '';
+      formStatus.classList.add('hidden');
+    }
+  }
+
+  function setLoading(isLoading: boolean) {
+    submitButton.disabled = isLoading;
+    loadingSpinner?.classList.toggle('hidden', !isLoading);
+  }
+
+  function showFieldError(field: HTMLElement, message: string) {
+    const errorId = `${field.id}-error`;
+    const errorElement = document.getElementById(errorId);
+    if (errorElement) {
+      errorElement.textContent = message;
+      errorElement.classList.remove('hidden');
+      field.setAttribute('aria-invalid', 'true');
+      field.setAttribute('aria-describedby', errorId);
+    }
+  }
+
+  function clearFieldErrors() {
+    const errorElements = form.querySelectorAll('[id$="-error"]');
+    errorElements.forEach((element) => {
+      element.textContent = '';
+      element.classList.add('hidden');
+    });
+
+    const formFields = form.querySelectorAll('input, textarea');
+    formFields.forEach((field) => {
+      field.removeAttribute('aria-invalid');
+      field.removeAttribute('aria-describedby');
+    });
+  }
+
+  async function handleSubmit(event: Event) {
+    event.preventDefault();
+    clearStatus();
+    clearFieldErrors();
+
+    const formData: FormData = {
+      name: form.elements.name.value.trim(),
+      email: form.elements.email.value.trim(),
+      message: form.elements.message.value.trim(),
+    };
+
+    const validationResult = validateForm(formData);
+
+    if (!validationResult.isValid) {
+      validationResult.errors.forEach((error) => {
+        const field = form.elements[error.field];
+        showFieldError(field, error.message);
+      });
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+
+      form.reset();
+      showStatus('Message sent successfully! We\'ll get back to you soon.', 'success');
+      submitButton.focus();
+    } catch (error) {
+      console.error('Error sending message:', error);
+      showStatus('Failed to send message. Please try again later.', 'error');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  form?.addEventListener('submit', handleSubmit);
+</script>

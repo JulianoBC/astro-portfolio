@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import ContactForm from '../components/ContactForm.astro';
+---
+
+<Layout title="Contact | Juliano BC" description="Get in touch with me. Send a message through this contact form and I'll get back to you as soon as possible.">
+  <div class="min-h-screen bg-gray-50 dark:bg-gradient-to-b dark:from-gray-900 dark:to-gray-800">
+    <Header />
+    
+    <main class="max-w-3xl mx-auto pt-24 px-4 sm:px-6 lg:px-8">
+      <ContactForm />
+    </main>
+  </div>
+</Layout>

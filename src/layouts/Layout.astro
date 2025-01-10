@@ -10,7 +10,7 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
@@ -18,8 +18,9 @@ const { title } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<ViewTransitions />
 	</head>
-	<body>
+	<body class="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
 		<UnderConstruction position="fixed" />
 		<slot />
 	</body>
@@ -27,4 +28,34 @@ const { title } = Astro.props;
 
 <style is:global>
 	@import '../styles/global.css';
+	:root {
+		--bg-header: rgba(255, 255, 255, 0.9);
+		--text-primary: #111827;
+		--text-secondary: #374151;
+		--text-hover: #2563eb;
+		--bg-hover: rgba(37, 99, 235, 0.1);
+		--surface-1: #ffffff;
+		--surface-2: #f3f4f6;
+	}
+
+	.dark {
+		--bg-header: rgba(17, 24, 39, 0.95);
+		--text-primary: #f9fafb;
+		--text-secondary: #d1d5db;
+		--text-hover: #60a5fa;
+		--bg-hover: rgba(96, 165, 250, 0.15);
+		--surface-1: #1f2937;
+		--surface-2: #111827;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:root {
+			--bg-header: rgba(17, 24, 39, 0.8);
+			--text-primary: #f7fafc;
+			--text-secondary: #a0aec0;
+			--text-hover: #60a5fa;
+			--bg-hover: rgba(96, 165, 250, 0.1);
+		}
+	}
 </style>
+</write_to_file>

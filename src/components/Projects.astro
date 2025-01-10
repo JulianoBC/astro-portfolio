@@ -5,6 +5,7 @@ interface Project {
   url: string;
   image: string;
   preview?: boolean;
+  technologies: string[];
 }
 
 const projects: Project[] = [
@@ -13,43 +14,48 @@ const projects: Project[] = [
     description: "Site pessoal desenvolvido com AstroJS e TailwindCSS",
     url: "https://julianobc.vercel.app/",
     image: "/projects/portfolio.jpg",
-    preview: true
+    preview: true,
+    technologies: ["frontend", "tools"]
   },
   {
     title: "Pagina de Cancelamento de Matrícula",
     description: "Novo projeto em desenvolvimento",
     url: "https://cancelamento-feedback.vercel.app/cancel",
     image: "/projects/coming-soon.jpg",
-    preview: true
+    preview: true,
+    technologies: ["frontend"]
   },
   {
     title: "Em Breve",
     description: "Novo projeto em desenvolvimento",
     url: "#",
     image: "/projects/coming-soon.jpg",
-    preview: false
+    preview: false,
+    technologies: ["backend", "tools"]
   },
   {
     title: "Em Breve",
     description: "Novo projeto em desenvolvimento",
     url: "#",
     image: "/projects/coming-soon.jpg",
-    preview: false
+    preview: false,
+    technologies: ["frontend", "backend"]
   }
 ];
 
 import UnderConstruction from './UnderConstruction.astro';
 import LinkPreview from './LinkPreview.astro';
+import ProjectFilters from './ProjectFilters.astro';
 
 ---
 
 <section class="projects" id="projects">
   <div class="container mx-auto px-4">
     <h2 class="section-title text-3xl font-bold mb-8">Projetos</h2>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+    <ProjectFilters />
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 transition-all duration-300">
       {projects.map(project => (
-        <div class="project-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden relative">
+        <div class="project-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden relative transition-all duration-300" data-tags={project.technologies.join(',')}>
           {project.url === "#" && (
             <UnderConstruction 
               position="absolute" 

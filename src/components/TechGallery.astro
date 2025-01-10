@@ -1,0 +1,41 @@
+---
+const techData = [
+  { name: 'JavaScript', icon: '/public/logo.svg' },
+  { name: 'React', icon: '/public/logo.svg' },
+  { name: 'Node.js', icon: '/public/logo.svg' },
+  { name: 'HTML', icon: '/public/logo.svg' },
+  { name: 'CSS', icon: '/public/logo.svg' },
+  { name: 'Astro', icon: '/public/logo.svg' },
+];
+---
+
+<div class="tech-gallery">
+  <h2>Technologies</h2>
+  <ul>
+    {techData.map((tech) => (
+      <li class="tech-item">
+        <img src={tech.icon} alt={tech.name} title={tech.name} />
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+.tech-gallery {
+  margin-bottom: 20px;
+}
+
+.tech-gallery ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.tech-item img {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+</style>
