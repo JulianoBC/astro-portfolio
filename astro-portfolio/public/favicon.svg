@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="faviconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B6B" />
+      <stop offset="100%" style="stop-color:#4ECDC4" />
+    </linearGradient>
+  </defs>
+  
+  <style>
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    .letter {
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      font-size: 24px;
+      fill: url(#faviconGradient);
+      animation: pulse 2s infinite;
+      transform-origin: center;
+    }
+  </style>
+  
+  <rect width="32" height="32" rx="6" fill="#1a1a1a"/>
+  <g transform="translate(8, 24)">
+    <text class="letter">J</text>
+  </g>
+</svg>

@@ -1,0 +1,80 @@
+---
+---
+
+<nav class="nav-menu">
+  <ul>
+    <li>
+      <a href="/" class="home-logo">
+        <img src="/logo.svg" alt="JBC Logo" class="logo-svg" />
+      </a>
+    </li>
+    <li><a href="#about">Sobre</a></li>
+    <li><a href="#projects">Projetos</a></li>
+    <li><a href="/contact">Contato</a></li>
+  </ul>
+</nav>
+
+<style>
+  .nav-menu ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+  }
+
+  .nav-menu a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    padding: 0.5rem 0;
+    position: relative;
+  }
+
+  .nav-menu a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--text-secondary);
+    transition: width 0.3s ease;
+  }
+
+  .nav-menu a:hover::after {
+    width: 100%;
+  }
+
+  .nav-menu a:hover {
+    color: var(--text-hover);
+  }
+
+  .home-logo {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    background: none;
+    border: none;
+  }
+
+  .home-logo:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+  }
+
+  .logo-svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .nav-menu ul li:first-child a {
+    padding: 0;
+  }
+
+  .nav-menu ul li:first-child a:hover {
+    background: none;
+  }
+</style>

@@ -1,0 +1,11 @@
+0000000000000000000000000000000000000000 2c9bb3ea53ddd6a9bcaa321adb5f9e54c1ad5300 Juliano BC <88047451+JulianoBC@users.noreply.github.com> 1733363768 -0300	clone: from https://github.com/JulianoBC/astro-portfolio.git
+2c9bb3ea53ddd6a9bcaa321adb5f9e54c1ad5300 646e16d604122eff150dd9c63c0669a8bd70127f Juliano BC <88047451+JulianoBC@users.noreply.github.com> 1733364420 -0300	commit: upgrade: Astro version to 5.0.2 and update dependencies
+646e16d604122eff150dd9c63c0669a8bd70127f bfade5065357454e629d7df08e4543312855ac84 Juliano BC <88047451+JulianoBC@users.noreply.github.com> 1733371319 -0300	commit: feat: melhorias no header e novo post sobre AstroJS
+bfade5065357454e629d7df08e4543312855ac84 565363aee516fe967af2c4f3d414dc752260179e Juliano BC <88047451+JulianoBC@users.noreply.github.com> 1736034727 -0300	commit: feat: Atualiza sistema de preview dos projetos
+565363aee516fe967af2c4f3d414dc752260179e 565363aee516fe967af2c4f3d414dc752260179e Juliano BC <88047451+JulianoBC@users.noreply.github.com> 1736488430 -0300	checkout: moving from main to StylesFromAI
+565363aee516fe967af2c4f3d414dc752260179e 77d63a49d141169d924dad8aa859acb926ff1cda Juliano BC <88047451+JulianoBC@users.noreply.github.com> 1736488491 -0300	commit: Initial commit on StylesFromAI branch
+77d63a49d141169d924dad8aa859acb926ff1cda 665f102a172611c62b87ff60340e640201319b58 Juliano BC <88047451+JulianoBC@users.noreply.github.com> 1736488968 -0300	commit: Add detailed timeline of updates
+665f102a172611c62b87ff60340e640201319b58 665f102a172611c62b87ff60340e640201319b58 Juliano BC <88047451+JulianoBC@users.noreply.github.com> 1736489120 -0300	checkout: moving from StylesFromAI to StylesFromAI
+665f102a172611c62b87ff60340e640201319b58 b48965679fe69276084d8852cacbb70558196f33 Juliano BC <88047451+JulianoBC@users.noreply.github.com> 1736489194 -0300	commit: Move header components to header directory and update imports
+b48965679fe69276084d8852cacbb70558196f33 b48965679fe69276084d8852cacbb70558196f33 Juliano BC <88047451+JulianoBC@users.noreply.github.com> 1736868761 -0300	reset: moving to HEAD
+b48965679fe69276084d8852cacbb70558196f33 565363aee516fe967af2c4f3d414dc752260179e Juliano BC <88047451+JulianoBC@users.noreply.github.com> 1736868761 -0300	checkout: moving from StylesFromAI to main

@@ -1,0 +1,236 @@
+---
+interface Props {
+  title?: string;
+  id?: string;
+}
+
+const { 
+  title = "Sobre Mim",
+  id = "about"
+} = Astro.props;
+
+const skills = {
+  frontend: [
+    "AstroJS ",
+    "React",
+    "TypeScript",
+    "Next.js",
+    "Tailwind CSS",
+    "HTML/CSS"
+  ],
+  backend: [
+    "Node.js",
+    "Express",
+    "MongoDB",
+    "SQL",
+    "RESTful APIs"
+  ],
+  tools: [
+    "Git",
+    "Docker",
+    "AWS",
+    "CI/CD"
+  ]
+};
+---
+
+<section class="about about-section" id="about">
+  <div class="container">
+    <h2 class="section-title">{title}</h2>
+    
+    <div class="about-content">
+      <div class="bio">
+        <p class="bio-text">
+          Com mais de 2 anos de experiência em desenvolvimento web, encontro na programação a 
+          perfeita combinação entre criatividade e resolução de problemas. Minha jornada é 
+          marcada pela busca constante por código limpo e soluções elegantes.
+        </p>
+        <p class="bio-text">
+          Advogo para tecnologias diretas e objetivas, como o framework AstroJS, que entrega 
+          alta performance e qualidade sem complicações. Meu objetivo é simples: criar aplicações 
+          rápidas que resolvem problemas reais.
+        </p>
+      </div>
+
+      <div class="skills">
+        <div class="skill-category">
+          <h3>Frontend</h3>
+          <div class="skill-tags">
+            {skills.frontend.map(skill => (
+              <span class="skill-tag">{skill}</span>
+            ))}
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <h3>Backend</h3>
+          <div class="skill-tags">
+            {skills.backend.map(skill => (
+              <span class="skill-tag">{skill}</span>
+            ))}
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <h3>Ferramentas & DevOps</h3>
+          <div class="skill-tags">
+            {skills.tools.map(skill => (
+              <span class="skill-tag">{skill}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    padding: 6rem 2rem;
+    background: var(--bg-secondary);
+  }
+
+  .about-section {
+    scroll-margin-top: 100px;
+    padding: 4rem 2rem;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 3rem;
+    background: linear-gradient(45deg, var(--text-primary), var(--text-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .about-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+
+  .bio {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .bio-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+  }
+
+  .skills {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .skill-category h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .skill-tag {
+    background: var(--bg-hover);
+    color: var(--text-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    cursor: default;
+    position: relative;
+  }
+
+  .skill-tag:hover {
+    background: var(--bg-hover-dark);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+  }
+
+  /* Animação especial para AstroJS */
+  .skill-tag:first-child {
+    background: linear-gradient(45deg, #7f00ff, #e100ff);
+    color: white;
+    position: relative;
+    z-index: 1;
+  }
+
+  .skill-tag:first-child::before {
+    content: "❤️";
+    position: absolute;
+    font-size: 4rem;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  .skill-tag:first-child:hover::before {
+    opacity: 0.2;
+    transform: translate(-50%, -50%) scale(1.4);
+  }
+
+  .skill-tag:first-child:hover {
+    animation: heartBeat 1s infinite;
+    background: linear-gradient(45deg, #ff0080, #7928ca);
+  }
+
+  @keyframes heartBeat {
+    0% {
+      transform: scale(1);
+    }
+    14% {
+      transform: scale(1.1);
+    }
+    28% {
+      transform: scale(1);
+    }
+    42% {
+      transform: scale(1.1);
+    }
+    70% {
+      transform: scale(1);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about {
+      padding: 4rem 1rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+    }
+
+    .bio-text {
+      font-size: 1rem;
+    }
+
+    .skills {
+      grid-template-columns: 1fr;
+    }
+
+    .skill-tags {
+      justify-content: center;
+    }
+  }
+</style>

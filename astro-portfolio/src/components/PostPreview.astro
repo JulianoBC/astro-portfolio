@@ -1,0 +1,55 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  tags: string[];
+  slug: string;
+}
+
+const { title, description, pubDate, tags, slug } = Astro.props;
+---
+
+<a 
+  href={`/blog/${slug}`}
+  class="block group"
+>
+  <article class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-all duration-300 group-hover:shadow-xl group-hover:scale-[1.02]">
+    <div class="h-48 bg-gradient-to-r from-blue-500 to-purple-600 relative overflow-hidden">
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+        <h2 class="text-2xl font-bold mb-2 group-hover:text-blue-200 transition-colors">
+          {title}
+        </h2>
+        <time class="text-sm opacity-80">
+          {pubDate.toLocaleDateString('pt-BR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </time>
+      </div>
+    </div>
+    
+    <div class="p-6">
+      <div class="flex gap-2 mb-4">
+        {tags.map((tag) => (
+          <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+            {tag}
+          </span>
+        ))}
+      </div>
+      
+      <p class="text-gray-600 dark:text-gray-300 line-clamp-3">
+        {description}
+      </p>
+      
+      <div class="mt-4 flex items-center text-blue-600 dark:text-blue-400 font-medium">
+        Ler mais
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </div>
+    </div>
+  </article>
+</a> 

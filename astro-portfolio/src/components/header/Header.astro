@@ -1,0 +1,99 @@
+---
+import HeaderLogo from './HeaderLogo.astro';
+import HeaderNavMenu from './HeaderNavMenu.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import LanguageToggle from './LanguageToggle.astro';
+---
+
+<header class="header">
+  <div class="header-content">
+    <HeaderLogo />
+    <HeaderNavMenu />
+    <ul>
+      <li><ThemeToggle /></li>
+      <li><LanguageToggle /></li>
+    </ul>
+  </div>
+</header>
+
+<style>
+  .header {
+    background-color: var(--bg-header);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
+
+  .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-content ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+  }
+
+  @media (max-width: 768px) {
+    .header-content {
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .header-content ul {
+      gap: 1rem;
+    }
+  }
+</style>
+
+<script>
+  // Adiciona scroll suave para links internos
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(this: HTMLAnchorElement, e: Event) {
+      e.preventDefault();
+      const href = this.getAttribute('href');
+      if (href === '#top') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (href) {
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
+  });
+
+  // Mapeamento de teclas para navegação
+  const handleKeyNavigation = (e: KeyboardEvent) => {
+    const currentPath = window.location.pathname;
+    
+    // Navegação com seta direita (entre páginas)
+    if (e.key === 'ArrowRight') {
+      if (currentPath === '/' || currentPath === '/index') {
+        window.location.href = '/blog';
+      }
+    }
+
+    // Navegação com seta esquerda (entre páginas)
+    if (e.key === 'ArrowLeft') {
+      if (currentPath === '/blog') {
+        window.location.href = '/';
+      }
+    }
+  };
+
+  // Adiciona o event listener para as teclas
+  document.addEventListener('keydown', handleKeyNavigation);
+</script>

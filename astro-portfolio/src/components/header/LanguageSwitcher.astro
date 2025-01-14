@@ -1,0 +1,177 @@
+---
+---
+
+<div class="language-switcher">
+    <button
+      id="language-toggle"
+      class="language-toggle"
+      aria-label="Change language"
+      aria-haspopup="true"
+      aria-expanded="false"
+      role="button"
+      tabindex="0"
+    >
+      <div class="lang-option" data-lang="pt-BR" role="option" aria-selected="true">
+        <span class="lang-text current">PT-BR</span>
+      </div>
+      <span class="lang-separator" aria-hidden="true">/</span>
+      <div class="lang-option" data-lang="en" role="option" aria-selected="false">
+        <span class="lang-text">ENG</span>
+      </div>
+    </button>
+  </div>
+  
+  <style>
+    .language-toggle {
+      background: none;
+      border: none;
+      color: var(--text-color);
+      cursor: pointer;
+      padding: 0.3rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+      border-radius: 8px;
+      outline: none;
+    }
+  
+    .language-toggle:focus-visible {
+      box-shadow: 0 0 0 2px var(--text-color);
+    }
+  
+    .language-changed {
+      animation: pulse 0.3s ease-in-out;
+    }
+  
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+  
+    .language-toggle:hover {
+      background: var(--bg-hover);
+      box-shadow: 0 0 0 1px var(--border-color);
+    }
+  
+    .lang-option {
+      display: flex;
+      align-items: center;
+      padding: 0.4rem 0.6rem;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+  
+    .lang-option:hover {
+      background: var(--bg-hover-light);
+    }
+  
+    .lang-option::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: 0;
+      right: 0;
+      height: 16px;
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 0.7;
+      transition: all 0.3s ease;
+    }
+  
+    .lang-option[data-lang="pt-BR"]::before {
+      background-image: url('/flags/br.svg');
+    }
+  
+    .lang-option[data-lang="en"]::before {
+      background-image: url('/flags/us.svg');
+    }
+  
+    .lang-text {
+      opacity: 0.9;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 2;
+      color: var(--text-color);
+      font-weight: 500;
+    }
+  
+    .lang-text.current {
+      opacity: 1;
+      font-weight: 600;
+    }
+  
+    .lang-option:has(.current) {
+      background: var(--bg-hover);
+    }
+  
+    .lang-option:has(.current)::before {
+      opacity: 0.9;
+    }
+  
+    .lang-option:hover::before {
+      opacity: 1;
+    }
+  
+    .lang-separator {
+      opacity: 0.5;
+      margin: 0 0.25rem;
+      user-select: none;
+    }
+  
+    :root {
+      --bg-hover: rgba(128, 128, 128, 0.1);
+      --bg-hover-light: rgba(128, 128, 128, 0.05);
+      --border-color: rgba(128, 128, 128, 0.2);
+    }
+  
+    .dark {
+      --bg-hover: rgba(255, 255, 255, 0.1);
+      --bg-hover-light: rgba(255, 255, 255, 0.05);
+      --border-color: rgba(255, 255, 255, 0.2);
+    }
+  </style>
+  
+  <script>
+    const languageToggle = document.getElementById('language-toggle');
+    const langOptions = document.querySelectorAll('.lang-option');
+    let currentLanguage = 'pt-BR'; // Default language
+  
+    langOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        const lang = option.getAttribute('data-lang') || 'en'; // Default to 'en' if null
+        currentLanguage = lang;
+  
+        // Update the current language display
+        langOptions.forEach(otherOption => {
+          otherOption.querySelector('.lang-text')?.classList.remove('current');
+          otherOption.setAttribute('aria-selected', 'false');
+        });
+        option.querySelector('.lang-text')?.classList.add('current');
+        option.setAttribute('aria-selected', 'true');
+        languageToggle?.classList.add('language-changed');
+        setTimeout(() => {
+          languageToggle?.classList.remove('language-changed');
+        }, 300);
+  
+        // You would likely want to trigger a page reload or update content here
+        // based on the new currentLanguage
+        console.log('Language switched to:', currentLanguage);
+      });
+    });
+  
+    // Set initial ARIA selected attribute
+    langOptions.forEach(option => {
+      if (option.getAttribute('data-lang') === currentLanguage) {
+        option.setAttribute('aria-selected', 'true');
+      }
+    });
+  </script>
+  

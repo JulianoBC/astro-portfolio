@@ -1,0 +1,114 @@
+---
+interface Project {
+  title: string;
+  description: string;
+  url: string;
+  image: string;
+  preview?: boolean;
+}
+
+const projects: Project[] = [
+  {
+    title: "Portfolio Astro",
+    description: "Site pessoal desenvolvido com AstroJS e TailwindCSS",
+    url: "https://julianobc.vercel.app/",
+    image: "/projects/portfolio.jpg",
+    preview: true
+  },
+  {
+    title: "Pagina de Cancelamento de Matrícula",
+    description: "Novo projeto em desenvolvimento",
+    url: "https://cancelamento-feedback.vercel.app/cancel",
+    image: "/projects/coming-soon.jpg",
+    preview: true
+  },
+  {
+    title: "Em Breve",
+    description: "Novo projeto em desenvolvimento",
+    url: "#",
+    image: "/projects/coming-soon.jpg",
+    preview: false
+  },
+  {
+    title: "Em Breve",
+    description: "Novo projeto em desenvolvimento",
+    url: "#",
+    image: "/projects/coming-soon.jpg",
+    preview: false
+  }
+];
+
+import UnderConstruction from './UnderConstruction.astro';
+import LinkPreview from './LinkPreview.astro';
+
+---
+
+<section class="projects" id="projects">
+  <div class="container mx-auto px-4">
+    <h2 class="section-title text-3xl font-bold mb-8">Projetos</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+      {projects.map(project => (
+        <div class="project-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden relative">
+          {project.url === "#" && (
+            <UnderConstruction 
+              position="absolute" 
+              angle={0} 
+              height={40} 
+              fontSize={1}
+              opacity={0.5}
+              breakOnHover={true}
+              direction="right"
+            />
+          )}
+          {project.preview && project.url !== "#" ? (
+            <LinkPreview url={project.url} />
+          ) : (
+            <>
+              <div class="project-preview">
+                <img src={project.image} alt={project.title} class="w-full h-48 object-cover" />
+                <div class="project-overlay opacity-0 absolute inset-0 bg-black bg-opacity-80 transition-all duration-300 flex flex-col justify-between p-6">
+                  <div>
+                    <h3 class="text-xl font-semibold text-white mb-2">{project.title}</h3>
+                    <p class="text-gray-300">{project.description}</p>
+                  </div>
+                  {project.url !== "#" && (
+                    <a 
+                      href={project.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+                    >
+                      Ver Projeto
+                    </a>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects {
+    scroll-margin-top: 100px;
+    padding: 4rem 0;
+  }
+
+  .project-card:hover .project-overlay {
+    opacity: 1 !important;
+  }
+
+  /* Efeito de elevação ao hover */
+  .project-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  }
+</style>
