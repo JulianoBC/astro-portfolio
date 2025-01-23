@@ -1,8 +1,8 @@
 ---
 title: "Por que escolher Astro.js para seu próximo site?"
 description: "Descubra como o Astro.js pode tornar seu site mais rápido, mais fácil de manter e mais eficiente em termos de custos."
-pubDate: "Jan 22 2025"
-heroImage: "/blog-placeholder-3.jpg"
+pubDate: "2025-01-22"
+tags: ["Astro.js", "Performance", "Web Development", "Português"]
 ---
 
 # Por que escolher Astro.js para seu próximo site?
