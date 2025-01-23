@@ -6,29 +6,40 @@ import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
 import Projects from '../components/Projects.astro';
 import LatestPosts from '../components/LatestPosts.astro';
+import BlogFeatured from '../components/BlogFeatured.astro';
 import { siteConfig } from '../config/site';
 ---
 
 <Layout title={`${siteConfig.title} - FullStack Web Developer`}>
-	<Header title={siteConfig.title} />
-	<main class="pt-24">
-		<div class="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-			<div class="lg:col-span-2">
-				<Hero />
-			</div>
-			<div class="lg:col-span-1">
-				<LatestPosts />
-			</div>
-		</div>
-		<About id="about" />
-		<Projects id="projects" />
-	</main>
+  <Header title={siteConfig.title} />
+  <main class="pt-24">
+    <div class="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+      <div class="lg:col-span-2">
+        <Hero />
+      </div>
+      <div class="lg:col-span-1 blog-content">
+        <div class="space-y-4">
+          <BlogFeatured />
+          <LatestPosts />
+        </div>
+      </div>
+    </div>
+    <About id="about" />
+    <Projects id="projects" />
+  </main>
 </Layout>
 
 <style>
-	main {
-		margin: 0;
-		padding-top: 6rem;
-		width: 100%;
-	}
+  main {
+    margin: 0;
+    padding-top: 6rem;
+    width: 100%;
+  }
+  .blog-content {
+    display: flex;
+    flex-direction: column;
+  }
+  .space-y-4 > * + * {
+    margin-top: 1rem;
+  }
 </style>

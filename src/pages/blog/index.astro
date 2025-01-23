@@ -1,11 +1,14 @@
 ---
 import LayoutBlog from '../../layouts/LayoutBlog.astro';
 import PostPreview from '../../components/PostPreview.astro';
+import BlogFeatured from '../../components/BlogFeatured.astro';
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../../config/site';
 
 const posts = await getCollection('blog');
-const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+// Get all posts except the featured one (por-que-escolher-astro.md)
+const regularPosts = posts.filter(post => post.id !== 'por-que-escolher-astro.md');
+const sortedPosts = regularPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
 <LayoutBlog title={`Blog - ${siteConfig.title}`}>
@@ -20,6 +23,10 @@ const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDa
     </header>
 
     <div class="max-w-7xl mx-auto">
+      <div class="mb-12">
+        <BlogFeatured />
+      </div>
+
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {sortedPosts.map((post) => (
           <PostPreview
@@ -47,4 +54,4 @@ const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDa
   article {
     transition: transform 0.2s ease-in-out;
   }
-</style> 
+</style>

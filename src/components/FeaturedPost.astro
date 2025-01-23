@@ -1,0 +1,51 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  url: string;
+  tags: string[];
+}
+
+const { title, description, pubDate, url, tags } = Astro.props;
+const formattedDate = pubDate.toLocaleDateString('pt-BR', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<div class="featured-post mb-8 p-6 rounded-lg bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-gray-700/30">
+  <div class="flex flex-col gap-2">
+    <div class="flex items-center gap-2 text-sm text-gray-400">
+      <span class="bg-blue-500/20 text-blue-300 px-2 py-1 rounded text-xs font-medium">Em destaque</span>
+      <time datetime={pubDate.toISOString()}>{formattedDate}</time>
+    </div>
+    
+    <h2 class="text-2xl font-bold hover:text-blue-400 transition-colors">
+      <a href={url}>{title}</a>
+    </h2>
+    
+    <p class="text-gray-400 line-clamp-2">{description}</p>
+    
+    <div class="flex gap-2 mt-2 flex-wrap">
+      {tags.map((tag) => (
+        <span class="bg-gray-700/30 text-gray-300 px-2 py-1 rounded-full text-xs">
+          {tag}
+        </span>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+.featured-post {
+  backdrop-filter: blur(8px);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.featured-post:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+</style>

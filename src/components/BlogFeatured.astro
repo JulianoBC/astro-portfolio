@@ -1,0 +1,28 @@
+---
+import { getCollection } from "astro:content";
+import FeaturedPost from "./FeaturedPost.astro";
+
+// Get all blog posts
+const posts = await getCollection("blog");
+
+// Get the featured post (in this case, the Portuguese Astro.js post)
+const featuredPost = posts.find((post) => post.id === "por-que-escolher-astro.md");
+
+// If no featured post is found, get the most recent post
+const latestPost = !featuredPost ? posts.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+)[0] : featuredPost;
+
+// Create the URL for the post
+const postUrl = `/blog/${latestPost.slug}`;
+---
+
+{latestPost && (
+  <FeaturedPost
+    title={latestPost.data.title}
+    description={latestPost.data.description}
+    pubDate={latestPost.data.pubDate}
+    url={postUrl}
+    tags={latestPost.data.tags}
+  />
+)}
