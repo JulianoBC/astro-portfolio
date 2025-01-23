@@ -17,9 +17,9 @@ Begin check-in process and document analysis.
 1. **Read Both Files**:  
    - Read `CHANGELOG.md` and `PROJECT_SCOPE.md`.  
    - Briefly report:  
-     ```
-     Read [filename]: [key points relevant to current task]
-     ```
+      ```
+      Read [filename]: [key points relevant to current task]
+      ```
 
 2. **Review Context**:  
    - Assess existing features, known issues, and architectural decisions.
@@ -28,7 +28,7 @@ Begin check-in process and document analysis.
    - Use the gathered context to guide your suggestions or actions.
 
 4. **Proceed Only After Context Review**:  
-   - Ensure all actions align with the project’s scope and continuity requirements.
+   - Ensure all actions align with the project's scope and continuity requirements.
 
 ---
 
@@ -39,21 +39,21 @@ Begin check-in process and document analysis.
 
 2. **Report Documentation Updates**:  
    - Use the following format to report updates:  
-     ```
-     Updated CHANGELOG.md: [details of what changed]  
-     Updated PROJECT_SCOPE.md: [details of what changed] (if applicable)
-     ```
+      ```
+      Updated CHANGELOG.md: [details of what changed]  
+      Updated PROJECT_SCOPE.md: [details of what changed] (if applicable)
+      ```
 
 3. **Ensure Alignment**:  
    - Verify that all changes align with existing architecture and features.
 
 4. **Document All Changes**:  
    - Include specific details about:
-     - New features or improvements
-     - Bug fixes
-     - Error handling changes
-     - UI/UX updates
-     - Technical implementation details
+      - New features or improvements
+      - Bug fixes
+      - Error handling changes
+      - UI/UX updates
+      - Technical implementation details
 
 ---
 
@@ -85,15 +85,15 @@ Begin check-in process and document analysis.
 ### **Log Analysis Protocol**
 1. **When Reviewing Conversation Logs**:
    - Briefly report findings using this format:  
-     ```
-     Analyzed conversation: [key points relevant to task]
-     ```
+      ```
+      Analyzed conversation: [key points relevant to task]
+      ```
 
 2. **When Examining Code or Error Logs**:
    - Report findings using this format:  
-     ```
-     Reviewed [file/section]: [relevant findings]
-     ```
+      ```
+      Reviewed [file/section]: [relevant findings]
+      ```
 
 3. **Include Minimal Context for Current Task**:
    - Ensure findings directly inform the current task at hand.
@@ -113,3 +113,20 @@ Begin check-in process and document analysis.
 - Initialized a git repository in the `astro-portfolio` directory.
 - Removed the `.git` directory that was created by mistake.
 - Initialized a new git repository in the `astro-portfolio` directory using the user's repository URL.
+- Updated Layout.astro to use the site description from siteConfig instead of default "Astro description" in meta tags.
+- Added three new blog posts about Astro:
+  - "Astro in 2025: The Perfect Balance of Performance and Developer Experience"
+  - "Mastering SEO with Astro: A 2025 Guide to Modern Web Integration"
+  - "Astro's Market Dominance: 2025 Adoption Trends and Future Outlook"
+- Fixed blog post display by:
+  - Added required 'tags' field to all blog posts to match the schema
+  - Created dynamic route [slug].astro for individual blog post pages
+  - Ensured proper rendering of blog posts with markdown content
+- Enhanced blog text readability:
+  - Updated prose styles with proper text colors (gray-700/gray-200) for better contrast
+  - Added specific color styles for headings, paragraphs, lists, and strong text
+  - Improved dark mode text visibility with lighter shades
+- Updated third project in Projects.astro:
+  - Changed project title to "Luciano Marcucci"
+  - Updated URL to "https://lucianomarcucci.vercel.app"
+  - Added description "Site de um profissional de informatica"
