@@ -130,3 +130,8 @@ Begin check-in process and document analysis.
   - Changed project title to "Luciano Marcucci"
   - Updated URL to "https://lucianomarcucci.vercel.app"
   - Added description "Site de um profissional de informatica"
+- Added new Portuguese blog post:
+  - "Por que escolher Astro.js para seu próximo site?"
+  - Focused on explaining Astro.js benefits to non-technical audience
+  - Written in accessible Portuguese language
+  - Added proper schema with required tags field
