@@ -1,0 +1,11 @@
+---
+import BlogFeatured from './BlogFeatured.astro';
+import { experimental_AstroContainer as AstroContainer } from 'astro/container';
+import '@testing-library/jest-dom';
+import { expect, test } from 'vitest';
+
+test('BlogFeatured component renders correctly', async () => {
+  const container = await AstroContainer.create();
+  const result = await container.renderToString(BlogFeatured);
+  expect(result.html).toContain('blog-featured');
+});

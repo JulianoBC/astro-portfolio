@@ -1,11 +1,16 @@
 ---
-import Header from './Header.astro';
-import { experimental_AstroContainer as AstroContainer } from 'astro/container';
+import ComponentUnderTest from './Header.astro';
+import { getComponentOutput } from 'astro-component-tester';
 import '@testing-library/jest-dom';
 import { expect, test } from 'vitest';
 
+
+
 test('Header component renders correctly', async () => {
-  const container = await AstroContainer.create();
-  const result = await container.renderToString(Header);
-  expect(result.html).toContain('<header');
+  // Render the Header component
+  const props = {};
+  const component = await getComponentOutput('./src/components/header/Header.astro', props);
+
+  expect(component.html).toContain("<header>");
+
 });

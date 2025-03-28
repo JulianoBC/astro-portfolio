@@ -1,0 +1,11 @@
+---
+import HeaderLogo from './HeaderLogo.astro';
+import { experimental_AstroContainer as AstroContainer } from 'astro/container';
+import '@testing-library/jest-dom';
+import { expect, test } from 'vitest';
+
+test('HeaderLogo component renders correctly', async () => {
+  const container = await AstroContainer.create();
+  const result = await container.renderToString(HeaderLogo);
+  expect(result).toContain('header-logo');
+});

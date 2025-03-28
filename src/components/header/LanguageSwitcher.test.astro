@@ -1,0 +1,9 @@
+---
+import { getComponentOutput } from "astro-component-tester";
+import "@testing-library/jest-dom";
+import { expect, test } from "vitest";
+
+test("LanguageSwitcher renders correctly", async () => {
+  const { html } = await getComponentOutput(LanguageSwitcher);
+  expect(html).toContain("LanguageSwitcher");
+});

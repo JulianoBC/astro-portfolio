@@ -1,0 +1,12 @@
+---
+import Hero from './Hero.astro';
+import { experimental_AstroContainer as AstroContainer } from 'astro/container';
+import '@testing-library/jest-dom';
+import { expect, test } from 'vitest';
+
+test('Hero component renders correctly', async () => {
+  const container = await AstroContainer.create();
+  const result = await container.renderToString(Hero);
+  expect(result.html).toContain('hero');
+  expect(result.html).toContain('Juliano BC');
+});

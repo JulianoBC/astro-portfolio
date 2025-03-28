@@ -1,6 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "types": ["jest", "@testing-library/jest-dom"]
+    "types": ["@testing-library/jest-dom"],
+    "jsx": "preserve"
   }
 }

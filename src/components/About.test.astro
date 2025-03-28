@@ -1,0 +1,11 @@
+---
+import About from './About.astro';
+import { experimental_AstroContainer as AstroContainer } from 'astro/container';
+import '@testing-library/jest-dom';
+import { expect, test } from 'vitest';
+
+test('About component renders correctly', async () => {
+  const container = await AstroContainer.create();
+  const result = await container.renderToString(About);
+  expect(result.html).toContain('About');
+});

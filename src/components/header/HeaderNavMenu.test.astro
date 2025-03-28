@@ -1,0 +1,11 @@
+---
+import ComponentUnderTest from './HeaderNavMenu.astro';
+import '@testing-library/jest-dom';
+import { expect, test } from 'vitest';
+import { getComponentOutput } from 'astro-component-tester';
+
+test('HeaderNavMenu component renders correctly', async () => {
+  const props = {};
+  const component = await getComponentOutput('./src/components/header/HeaderNavMenu.astro', props);
+  expect(component.html).toContain('header-nav-menu');
+});
