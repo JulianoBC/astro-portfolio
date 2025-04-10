@@ -1,10 +1,6 @@
 ---
-title:
-  pt: 'Bem-vindo ao meu Blog!'
-  en: 'Welcome to my Blog!'
-description:
-  pt: 'Um espaço para compartilhar conhecimento, experiências e aprendizados sobre desenvolvimento web.'
-  en: 'A space to share knowledge, experiences, and learnings about web development.'
+title: 'Bem-vindo ao meu Blog!'
+description: 'Um espaço para compartilhar conhecimento, experiências e aprendizados sobre desenvolvimento web.'
 pubDate: '2023-12-05'
 tags: ['blog', 'desenvolvimento', 'web']
 ---

@@ -1,14 +1,18 @@
 ---
+import { siteConfig } from "../../config/site";
 ---
 
 <button id="language-toggle" class="language-toggle" aria-label="Toggle language">
-  <div class="lang-option" data-lang="pt-BR">
-    <span class="lang-text current">PT-BR</span>
-  </div>
-  <span class="lang-separator">/</span>
-  <div class="lang-option" data-lang="en">
-    <span class="lang-text">ENG</span>
-  </div>
+  {siteConfig.supportedLanguages.map((lang, idx) => (
+    <>
+      <div class="lang-option" data-lang={lang.code}>
+        <span class="lang-text">{lang.label}</span>
+      </div>
+      {idx < siteConfig.supportedLanguages.length - 1 && (
+        <span class="lang-separator">/</span>
+      )}
+    </>
+  ))}
 </button>
 
 <style>
@@ -119,8 +123,8 @@
   const languageToggle = document.getElementById('language-toggle');
   const ptBrOption = languageToggle?.querySelector('[data-lang="pt-BR"]');
   const engOption = languageToggle?.querySelector('[data-lang="en"]');
-  const ptBrText = ptBrOption?.querySelector('.lang-text');
-  const engText = engOption?.querySelector('.lang-text');
+  const langOptions = Array.from(languageToggle?.querySelectorAll('.lang-option') || []);
+  const langTexts = langOptions.map(opt => opt.querySelector('.lang-text'));
 
   let currentTranslations = {};
 
@@ -154,14 +158,16 @@
 
   // Updates the UI of the toggle button itself
   function updateToggleUI(lang: string) {
-    if (!ptBrText || !engText) return;
-    if (lang === 'pt-BR') {
-      ptBrText.classList.add('current');
-      engText.classList.remove('current');
-    } else {
-      ptBrText.classList.remove('current');
-      engText.classList.add('current');
-    }
+    langOptions.forEach((opt, idx) => {
+      const code = opt.getAttribute('data-lang');
+      if (langTexts[idx]) {
+        if (code === lang) {
+          langTexts[idx].classList.add('current');
+        } else {
+          langTexts[idx].classList.remove('current');
+        }
+      }
+    });
   }
 
   // Sets the language, saves it, updates UI, and loads translations
@@ -173,12 +179,12 @@
   }
 
   // Add click listeners
-  if (ptBrOption) {
-    ptBrOption.addEventListener('click', () => setLanguage('pt-BR'));
-  }
-  if (engOption) {
-    engOption.addEventListener('click', () => setLanguage('en'));
-  }
+  langOptions.forEach(opt => {
+    const code = opt.getAttribute('data-lang');
+    if (code) {
+      opt.addEventListener('click', () => setLanguage(code));
+    }
+  });
 
   // Initialize on page load
   function initializeLanguage() {

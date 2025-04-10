@@ -1,29 +1,39 @@
 ---
+import { siteConfig } from "../../config/site";
 ---
-
 <nav class="nav-menu">
-  <ul>
+  <button id="nav-toggle" class="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+    <span class="hamburger"></span>
+  </button>
+  <ul id="nav-list" class="nav-list">
     <li>
       <a href="/" class="home-logo">
         <img src="/logo.svg" alt="JBC Logo" class="logo-svg" />
       </a>
     </li>
-    <li><a href="#about" data-translate-key="nav.about">Sobre</a></li>
-    <li><a href="#projects" data-translate-key="nav.projects">Projetos</a></li>
-    <li><a href="/contact" data-translate-key="nav.contact">Contato</a></li>
+    {siteConfig.navigationLinks.map(link => (
+      <li>
+        <a href={link.path} data-translate-key={`nav.${link.key}`}>{link.label}</a>
+      </li>
+    ))}
   </ul>
+  <div id="nav-overlay" class="nav-overlay"></div>
+</nav>
 </nav>
 
 <style>
-  .nav-menu ul {
+  .nav-menu {
+    position: relative;
+  }
+  .nav-list {
     list-style: none;
     display: flex;
     gap: 2rem;
     margin: 0;
     padding: 0;
     align-items: center;
+    transition: right 0.3s;
   }
-
   .nav-menu a {
     color: var(--text-primary);
     text-decoration: none;
@@ -32,7 +42,6 @@
     padding: 0.5rem 0;
     position: relative;
   }
-
   .nav-menu a::after {
     content: '';
     position: absolute;
@@ -43,15 +52,12 @@
     background-color: var(--text-secondary);
     transition: width 0.3s ease;
   }
-
   .nav-menu a:hover::after {
     width: 100%;
   }
-
   .nav-menu a:hover {
     color: var(--text-hover);
   }
-
   .home-logo {
     display: flex;
     align-items: center;
@@ -59,22 +65,126 @@
     background: none;
     border: none;
   }
-
   .home-logo:hover {
     transform: scale(1.1);
     transition: transform 0.3s ease;
   }
-
   .logo-svg {
     width: 40px;
     height: 40px;
   }
-
-  .nav-menu ul li:first-child a {
+  .nav-list li:first-child a {
     padding: 0;
   }
-
-  .nav-menu ul li:first-child a:hover {
+  .nav-list li:first-child a:hover {
     background: none;
   }
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    position: absolute;
+    left: 0.5rem;
+    top: 0.5rem;
+    z-index: 1101;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .hamburger {
+    width: 28px;
+    height: 3px;
+    background: var(--text-primary, #222);
+    border-radius: 2px;
+    position: relative;
+    display: block;
+    transition: background 0.3s;
+  }
+  .hamburger::before,
+  .hamburger::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 28px;
+    height: 3px;
+    background: var(--text-primary, #222);
+    border-radius: 2px;
+    transition: transform 0.3s;
+  }
+  .hamburger::before {
+    top: -9px;
+  }
+  .hamburger::after {
+    top: 9px;
+  }
+  /* Mobile styles */
+  @media (max-width: 900px) {
+    .nav-toggle {
+      display: flex;
+    }
+    .nav-list {
+      flex-direction: column;
+      gap: 2.5rem;
+      position: fixed;
+      top: 0;
+      right: -100vw;
+      width: 80vw;
+      max-width: 320px;
+      height: 100vh;
+      background: var(--bg-secondary, #fff);
+      box-shadow: -2px 0 16px rgba(0,0,0,0.08);
+      padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+      z-index: 1100;
+      align-items: flex-start;
+      transition: right 0.3s;
+    }
+    .nav-list.open {
+      right: 0;
+    }
+    .nav-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.3);
+      z-index: 1099;
+    }
+    .nav-overlay.open {
+      display: block;
+    }
+  }
 </style>
+<script type="module" client:load>
+  const navToggle = document.getElementById('nav-toggle');
+  const navList = document.getElementById('nav-list');
+  const navOverlay = document.getElementById('nav-overlay');
+  function openMenu() {
+    navList.classList.add('open');
+    navOverlay.classList.add('open');
+    navToggle.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    navList.classList.remove('open');
+    navOverlay.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  navToggle?.addEventListener('click', () => {
+    if (navList.classList.contains('open')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+  navOverlay?.addEventListener('click', closeMenu);
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+  });
+  // Close on navigation
+  navList?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+</script>

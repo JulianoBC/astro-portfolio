@@ -111,6 +111,7 @@ Begin check-in process and document analysis.
 ### Added
 - New FeaturedPost component to highlight important blog posts
 - BlogFeatured component to manage featured post selection and display
+- NewsletterSignup component for newsletter email capture with validation and user feedback
 - Featured post integration in both index.astro and blog/index.astro pages
 - Stylish featured post design with gradient background and hover effects
 - Comprehensive blog styling system:
@@ -127,6 +128,9 @@ Begin check-in process and document analysis.
 - Removed the `.git` directory that was created by mistake
 - Initialized a new git repository in the `astro-portfolio` directory using the user's repository URL
 - Updated Layout.astro to use the site description from siteConfig instead of default "Astro description" in meta tags
+- Refactored `HeaderNavMenu.astro` and `LanguageToggle.astro` to use navigation links and supported languages from `siteConfig` (src/config/site.ts) instead of hardcoded values
+- Improved maintainability and scalability of header navigation and language toggle
+- Fixed TypeScript issues in `LanguageToggle.astro` related to type safety and null checks
 - Added three new blog posts about Astro:
   - "Astro in 2025: The Perfect Balance of Performance and Developer Experience"
   - "Mastering SEO with Astro: A 2025 Guide to Modern Web Integration"
@@ -157,3 +161,6 @@ Begin check-in process and document analysis.
   - Added styled borders and decorative elements
   - Enhanced spacing between elements
   - Improved heading hierarchy and visual weight
+- Accessibility and code clarity in header navigation and language toggle:
+  - Navigation and language options now use configuration, reducing hardcoding
+  - Improved ARIA labeling and dynamic rendering for language toggle

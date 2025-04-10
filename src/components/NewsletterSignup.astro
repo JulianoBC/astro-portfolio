@@ -1,0 +1,104 @@
+---
+const { title = "Subscribe to our Newsletter", description = "Get the latest updates and articles delivered to your inbox." } = Astro.props;
+---
+
+<form id="newsletter-form" class="newsletter-signup" autocomplete="off">
+  <h3>{title}</h3>
+  <p>{description}</p>
+  <div class="newsletter-fields">
+    <input
+      type="email"
+      name="email"
+      id="newsletter-email"
+      placeholder="Your email"
+      aria-label="Email address"
+      required
+      autocomplete="email"
+    />
+    <button type="submit" id="newsletter-submit">
+      Subscribe
+    </button>
+  </div>
+  <div id="newsletter-error" class="newsletter-error" style="display:none;"></div>
+  <div id="newsletter-success" class="newsletter-success" style="display:none;"></div>
+</form>
+
+<script type="module">
+  const form = document.getElementById('newsletter-form');
+  const emailInput = document.getElementById('newsletter-email');
+  const submitBtn = document.getElementById('newsletter-submit');
+  const errorDiv = document.getElementById('newsletter-error');
+  const successDiv = document.getElementById('newsletter-success');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    errorDiv.style.display = "none";
+    successDiv.style.display = "none";
+    const email = emailInput.value.trim();
+    if (!email || !/^[^@]+@[^@]+\.[^@]+$/.test(email)) {
+      errorDiv.textContent = "Please enter a valid email address.";
+      errorDiv.style.display = "block";
+      return;
+    }
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Subscribed!";
+    successDiv.textContent = "Thank you for subscribing!";
+    successDiv.style.display = "block";
+    // TODO: Integrate with backend or newsletter service here
+  });
+</script>
+
+<style>
+.newsletter-signup {
+  background: var(--bg-secondary, #f9f9f9);
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 400px;
+  margin: 2rem auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  text-align: center;
+}
+.newsletter-signup h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+}
+.newsletter-signup p {
+  margin-bottom: 1.2rem;
+  color: var(--text-secondary, #666);
+}
+.newsletter-fields {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.newsletter-signup input[type="email"] {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  flex: 1 1 0;
+}
+.newsletter-signup button {
+  padding: 0.5rem 1.2rem;
+  background: var(--primary, #0070f3);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.newsletter-signup button:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+.newsletter-error {
+  color: #d32f2f;
+  margin-top: 0.5rem;
+}
+.newsletter-success {
+  color: #388e3c;
+  margin-top: 0.5rem;
+}
+</style>

@@ -15,5 +15,8 @@
   "about.skills.tools": "Tools & DevOps",
   "post.read_more": "Read more",
   "latest_posts.title": "Latest Posts",
-  "latest_posts.view_all": "View all →"
+  "latest_posts.view_all": "View all →",
+  "blogpost.title": "Why choose Astro.js for your next website?",
+  "blogpost.description": "Discover how Astro.js can make your website faster, easier to maintain, and more cost-efficient.",
+  "blogpost.posted_on": "Posted on"
 }

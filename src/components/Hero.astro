@@ -28,6 +28,9 @@ import LatestPosts from './LatestPosts.astro';
             <span data-translate-key="hero.subtitle">Desenvolvedor FullStack que transforma curiosidade em código.
             Meu maior prazer é aprender coisas novas e aplicar esse conhecimento em soluções reais.</span>
           </p>
+          <div class="hero-skills-typing mt-6 mb-8 text-lg text-blue-600 dark:text-blue-400 font-mono min-h-[2.5rem]">
+            <span id="typed-skill"></span><span class="typing-cursor">|</span>
+          </div>
           <div class="flex gap-4">
             <a
               href="#projects"
@@ -73,6 +76,80 @@ import LatestPosts from './LatestPosts.astro';
     </div>
   </div>
 </section>
+
+<script type="module" client:load>
+  // List of skills to type out
+  const skills = [
+    "JavaScript",
+    "TypeScript",
+    "Astro",
+    "React",
+    "Node.js",
+    "CSS",
+    "Tailwind",
+    "FullStack",
+    "APIs"
+  ];
+  const typedSkill = document.getElementById("typed-skill");
+  const cursor = document.querySelector(".typing-cursor");
+  let skillIdx = 0;
+  let charIdx = 0;
+  let typing = true;
+
+  function typeSkill() {
+    if (!typedSkill) return;
+    if (typing) {
+      if (charIdx < skills[skillIdx].length) {
+        typedSkill.textContent += skills[skillIdx][charIdx];
+        charIdx++;
+        setTimeout(typeSkill, 80);
+      } else {
+        typing = false;
+        setTimeout(typeSkill, 1200);
+      }
+    } else {
+      if (charIdx > 0) {
+        typedSkill.textContent = skills[skillIdx].slice(0, charIdx - 1);
+        charIdx--;
+        setTimeout(typeSkill, 40);
+      } else {
+        typing = true;
+        skillIdx = (skillIdx + 1) % skills.length;
+        setTimeout(typeSkill, 400);
+      }
+    }
+  }
+
+  // Blinking cursor
+  setInterval(() => {
+    if (cursor) cursor.style.opacity = cursor.style.opacity === "0" ? "1" : "0";
+  }, 500);
+
+  typeSkill();
+</script>
+
+<style>
+.hero-skills-typing {
+  min-height: 2.5rem;
+  font-size: 1.25rem;
+  font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+}
+.typing-cursor {
+  display: inline-block;
+  width: 1ch;
+  color: #2563eb;
+  font-weight: bold;
+  margin-left: 2px;
+  animation: blink 1s steps(2, start) infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+</style>
 
 <style>
   .profile-image-container {

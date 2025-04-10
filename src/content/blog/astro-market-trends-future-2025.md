@@ -1,12 +1,8 @@
 ---
-title:
-  pt: "Astro dominando o mercado: tendências de adoção em 2025 e perspectivas futuras"
-  en: "Astro's Market Dominance: 2025 Adoption Trends and Future Outlook"
+title: "Astro's Market Dominance: 2025 Adoption Trends and Future Outlook"
 author: "Juliano BC"
 pubDate: "2025-01-22"
-description:
-  pt: "Analisando o crescimento da participação de mercado do Astro, tendências de adoção e previsões para o futuro do desenvolvimento web"
-  en: "Analyzing Astro's growing market share, adoption trends, and predictions for the future of web development"
+description: "Analyzing Astro's growing market share, adoption trends, and predictions for the future of web development"
 tags: ["astro", "market-trends", "future", "web-development", "adoption"]
 ---
 

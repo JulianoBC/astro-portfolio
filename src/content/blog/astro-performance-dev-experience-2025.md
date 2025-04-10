@@ -1,12 +1,8 @@
 ---
-title:
-  pt: "Astro em 2025: O equilíbrio perfeito entre performance e experiência do desenvolvedor"
-  en: "Astro in 2025: The Perfect Balance of Performance and Developer Experience"
+title: "Astro in 2025: The Perfect Balance of Performance and Developer Experience"
 author: "Juliano BC"
 pubDate: "2025-01-22"
-description:
-  pt: "Explorando como o Astro revolucionou o desenvolvimento web ao combinar performance excepcional com uma experiência de desenvolvedor incomparável"
-  en: "Exploring how Astro has revolutionized web development by combining exceptional performance with an unmatched developer experience"
+description: "Exploring how Astro has revolutionized web development by combining exceptional performance with an unmatched developer experience"
 tags: ["astro", "performance", "developer-experience", "web-development", "2025"]
 ---
 

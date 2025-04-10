@@ -44,12 +44,16 @@ import LinkPreview from './LinkPreview.astro';
 ---
 
 <section class="projects" id="projects">
+  <div id="projects-loading" class="projects-loading-overlay">
+    <div class="spinner"></div>
+    <span class="loading-text">Carregando projetos...</span>
+  </div>
   <div class="container mx-auto px-4">
     <h2 class="section-title text-3xl font-bold mb-8">Projetos</h2>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
       {projects.map(project => (
-        <div class="project-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden relative">
+        <div class="project-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden relative transition-transform duration-200 hover:scale-[1.03] active:scale-95">
           {project.url === "#" && (
             <UnderConstruction 
               position="absolute" 
@@ -66,7 +70,9 @@ import LinkPreview from './LinkPreview.astro';
           ) : (
             <>
               <div class="project-preview">
-                <img src={project.image} alt={project.title} class="w-full h-48 object-cover" />
+                <button class="lightbox-trigger" type="button" data-image={project.image} data-title={project.title} aria-label={`Expandir imagem de ${project.title}`}>
+                  <img src={project.image} alt={project.title} class="w-full h-48 object-cover transition-transform duration-300 hover:scale-105" />
+                </button>
                 <div class="project-overlay opacity-0 absolute inset-0 bg-black bg-opacity-80 transition-all duration-300 flex flex-col justify-between p-6">
                   <div>
                     <h3 class="text-xl font-semibold text-white mb-2">{project.title}</h3>
@@ -77,7 +83,7 @@ import LinkPreview from './LinkPreview.astro';
                       href={project.url} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+                      class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors focus:ring-2 focus:ring-blue-400 active:scale-95"
                     >
                       Ver Projeto
                     </a>
@@ -91,6 +97,182 @@ import LinkPreview from './LinkPreview.astro';
     </div>
   </div>
 </section>
+
+<!-- Lightbox Modal -->
+<div id="lightbox-modal" class="lightbox-modal" style="display:none;">
+  <div class="lightbox-overlay"></div>
+  <div class="lightbox-content">
+    <button class="lightbox-close" aria-label="Fechar">&times;</button>
+    <img id="lightbox-img" src="" alt="" />
+    <div id="lightbox-caption" class="lightbox-caption"></div>
+  </div>
+</div>
+
+<script type="module" client:load>
+  const modal = document.getElementById('lightbox-modal');
+  const modalImg = document.getElementById('lightbox-img');
+  const modalCaption = document.getElementById('lightbox-caption');
+  const closeBtn = document.querySelector('.lightbox-close');
+  const overlay = document.querySelector('.lightbox-overlay');
+  document.querySelectorAll('.lightbox-trigger').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const imgSrc = btn.getAttribute('data-image');
+      const imgTitle = btn.getAttribute('data-title');
+      if (modal && modalImg && modalCaption) {
+        modalImg.src = imgSrc;
+        modalImg.alt = imgTitle;
+        modalCaption.textContent = imgTitle;
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+    });
+  });
+  function closeModal() {
+    if (modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  }
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (overlay) overlay.addEventListener('click', closeModal);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+</script>
+
+<style>
+.lightbox-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0; width: 100vw; height: 100vh;
+  align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.7);
+}
+.lightbox-modal[style*="display: flex"] {
+  display: flex !important;
+}
+.lightbox-overlay {
+  position: absolute;
+  width: 100vw; height: 100vh;
+  left: 0; top: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 1;
+}
+.lightbox-content {
+  position: relative;
+  z-index: 2;
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-width: 96vw;
+  max-height: 96vh;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+}
+.lightbox-content img {
+  max-width: 90vw;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background: #f3f4f6;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+@media (max-width: 600px) {
+  .lightbox-content {
+    padding: 0.5rem;
+    max-width: 100vw;
+    max-height: 100vh;
+  }
+  .lightbox-content img {
+    max-width: 98vw;
+    max-height: 60vh;
+  }
+}
+.lightbox-caption {
+  color: #222;
+  font-size: 1.1rem;
+  text-align: center;
+}
+.lightbox-close {
+  position: absolute;
+  top: 0.5rem; right: 1rem;
+  background: none;
+  border: none;
+  font-size: 2.5rem;
+  color: #333;
+  cursor: pointer;
+  z-index: 3;
+  transition: color 0.2s;
+}
+.lightbox-close:hover {
+  color: #2563eb;
+}
+</style>
+
+<style>
+.projects-loading-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(255,255,255,0.85);
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s;
+}
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #2563eb;
+  border-top: 5px solid #e5e7eb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.loading-text {
+  color: #2563eb;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+</style>
+
+<script type="module" client:load>
+  // Hide loading overlay when all images are loaded
+  const overlay = document.getElementById('projects-loading');
+  const imgs = document.querySelectorAll('.project-preview img');
+  let loaded = 0;
+  function hideOverlay() {
+    if (overlay) overlay.style.display = 'none';
+  }
+  if (imgs.length === 0) hideOverlay();
+  imgs.forEach(img => {
+    if (img.complete) {
+      loaded++;
+      if (loaded === imgs.length) hideOverlay();
+    } else {
+      img.addEventListener('load', () => {
+        loaded++;
+        if (loaded === imgs.length) hideOverlay();
+      });
+      img.addEventListener('error', () => {
+        loaded++;
+        if (loaded === imgs.length) hideOverlay();
+      });
+    }
+  });
+</script>
 
 <style>
   .projects {
