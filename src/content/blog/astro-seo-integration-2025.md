@@ -1,8 +1,12 @@
 ---
-title: "Mastering SEO with Astro: A 2025 Guide to Modern Web Integration"
+title:
+  pt: "Dominando SEO com Astro: Um guia para integração moderna em 2025"
+  en: "Mastering SEO with Astro: A 2025 Guide to Modern Web Integration"
 author: "Juliano BC"
 pubDate: "2025-01-22"
-description: "An in-depth look at Astro's SEO capabilities and its seamless integration with modern web development tools in 2025"
+description:
+  pt: "Uma análise detalhada das capacidades de SEO do Astro e sua integração perfeita com ferramentas modernas de desenvolvimento web em 2025"
+  en: "An in-depth look at Astro's SEO capabilities and its seamless integration with modern web development tools in 2025"
 tags: ["astro", "seo", "integration", "web-development", "tools"]
 ---
 

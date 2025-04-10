@@ -1,0 +1,16 @@
+{
+  "nav.home": "Início",
+  "nav.blog": "Blog",
+  "nav.projects": "Projetos",
+  "nav.about": "Sobre",
+  "nav.contact": "Contato",
+  "hero.subtitle": "Desenvolvedor FullStack que transforma curiosidade em código. Meu maior prazer é aprender coisas novas e aplicar esse conhecimento em soluções reais.",
+  "hero.projects_button": "Ver Projetos",
+  "hero.blog_button": "Ler Blog",
+  "about.title": "Sobre Mim",
+  "about.bio1": "Com mais de 2 anos de experiência em desenvolvimento web, encontro na programação a perfeita combinação entre criatividade e resolução de problemas. Minha jornada é marcada pela busca constante por código limpo e soluções elegantes.",
+  "about.bio2": "Advogo para tecnologias diretas e objetivas, como o framework AstroJS, que entrega alta performance e qualidade sem complicações. Meu objetivo é simples: criar aplicações rápidas que resolvem problemas reais.",
+  "about.skills.frontend": "Frontend",
+  "about.skills.backend": "Backend",
+  "about.skills.tools": "Ferramentas & DevOps"
+}

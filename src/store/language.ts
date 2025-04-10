@@ -1,12 +1,30 @@
-// Armazena o estado do idioma atual
-let currentLanguage = 'pt-BR';
+type Language = 'pt-BR' | 'en';
 
-// Função para obter o idioma atual
-export const getCurrentLanguage = () => currentLanguage;
+let currentLanguage: Language = (localStorage.getItem('language') as Language) || 'pt-BR';
 
-// Função para alterar o idioma
-export const setLanguage = (lang: 'pt-BR' | 'en') => {
+const subscribers: Array<(lang: Language) => void> = [];
+
+function notify() {
+  subscribers.forEach((callback) => callback(currentLanguage));
+}
+
+export function getLanguage(): Language {
+  return currentLanguage;
+}
+
+export function setLanguage(lang: Language) {
   currentLanguage = lang;
+  localStorage.setItem('language', lang);
   document.documentElement.setAttribute('lang', lang);
-  // Aqui você pode adicionar lógica adicional quando implementar a tradução
-};
+  notify();
+}
+
+export function subscribe(callback: (lang: Language) => void) {
+  subscribers.push(callback);
+  // Call immediately with current language
+  callback(currentLanguage);
+  return () => {
+    const index = subscribers.indexOf(callback);
+    if (index !== -1) subscribers.splice(index, 1);
+  };
+}

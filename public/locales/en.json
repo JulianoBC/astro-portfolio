@@ -1,0 +1,19 @@
+{
+  "nav.home": "Home",
+  "nav.blog": "Blog",
+  "nav.projects": "Projects",
+  "nav.about": "About",
+  "nav.contact": "Contact",
+  "hero.subtitle": "FullStack developer transforming curiosity into code. My greatest pleasure is learning new things and applying this knowledge to real solutions.",
+  "hero.projects_button": "View Projects",
+  "hero.blog_button": "Read Blog",
+  "about.title": "About Me",
+  "about.bio1": "With over 2 years of web development experience, I find in programming the perfect combination of creativity and problem-solving. My journey is marked by a constant pursuit of clean code and elegant solutions.",
+  "about.bio2": "I advocate for direct and objective technologies like the AstroJS framework, which delivers high performance and quality without complications. My goal is simple: create fast applications that solve real problems.",
+  "about.skills.frontend": "Frontend",
+  "about.skills.backend": "Backend", 
+  "about.skills.tools": "Tools & DevOps",
+  "post.read_more": "Read more",
+  "latest_posts.title": "Latest Posts",
+  "latest_posts.view_all": "View all →"
+}

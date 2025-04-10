@@ -1,6 +1,10 @@
 ---
-title: 'AstroJS 5.0: Da Instalação à Otimização de Performance'
-description: 'Um guia completo sobre como iniciar com AstroJS e otimizar seu projeto para máxima performance'
+title:
+  pt: 'AstroJS 5.0: Da Instalação à Otimização de Performance'
+  en: 'AstroJS 5.0: From Installation to Performance Optimization'
+description:
+  pt: 'Um guia completo sobre como iniciar com AstroJS e otimizar seu projeto para máxima performance'
+  en: 'A complete guide on how to get started with AstroJS and optimize your project for maximum performance'
 pubDate: '2024-01-15'
 heroImage: '/blog/astro-5.webp'
 category: 'Astro'

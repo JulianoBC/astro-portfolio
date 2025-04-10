@@ -36,25 +36,25 @@ const skills = {
 
 <section class="about about-section" id="about">
   <div class="container">
-    <h2 class="section-title">{title}</h2>
+    <h2 class="section-title" data-translate-key="about.title">{title}</h2>
     
     <div class="about-content">
       <div class="bio">
         <p class="bio-text">
-          Com mais de 2 anos de experiência em desenvolvimento web, encontro na programação a 
-          perfeita combinação entre criatividade e resolução de problemas. Minha jornada é 
-          marcada pela busca constante por código limpo e soluções elegantes.
+          <span data-translate-key="about.bio1">Com mais de 2 anos de experiência em desenvolvimento web, encontro na programação a
+          perfeita combinação entre criatividade e resolução de problemas. Minha jornada é
+          marcada pela busca constante por código limpo e soluções elegantes.</span>
         </p>
         <p class="bio-text">
-          Advogo para tecnologias diretas e objetivas, como o framework AstroJS, que entrega 
-          alta performance e qualidade sem complicações. Meu objetivo é simples: criar aplicações 
-          rápidas que resolvem problemas reais.
+          <span data-translate-key="about.bio2">Advogo para tecnologias diretas e objetivas, como o framework AstroJS, que entrega
+          alta performance e qualidade sem complicações. Meu objetivo é simples: criar aplicações
+          rápidas que resolvem problemas reais.</span>
         </p>
       </div>
 
       <div class="skills">
         <div class="skill-category">
-          <h3>Frontend</h3>
+          <h3 data-translate-key="about.skills.frontend">Frontend</h3>
           <div class="skill-tags">
             {skills.frontend.map(skill => (
               <span class="skill-tag">{skill}</span>
@@ -63,7 +63,7 @@ const skills = {
         </div>
 
         <div class="skill-category">
-          <h3>Backend</h3>
+          <h3 data-translate-key="about.skills.backend">Backend</h3>
           <div class="skill-tags">
             {skills.backend.map(skill => (
               <span class="skill-tag">{skill}</span>
@@ -72,7 +72,7 @@ const skills = {
         </div>
 
         <div class="skill-category">
-          <h3>Ferramentas & DevOps</h3>
+          <h3 data-translate-key="about.skills.tools">Ferramentas & DevOps</h3>
           <div class="skill-tags">
             {skills.tools.map(skill => (
               <span class="skill-tag">{skill}</span>

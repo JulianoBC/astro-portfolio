@@ -80,7 +80,8 @@
 
   .lang-text.current {
     opacity: 1;
-    font-weight: 600;
+    font-weight: 600; /* Reverted weight */
+    /* Color and text-decoration reverted to default */
   }
 
   .lang-option:has(.current) {
@@ -115,41 +116,82 @@
 </style>
 
 <script>
-  // Language toggle logic
   const languageToggle = document.getElementById('language-toggle');
   const ptBrOption = languageToggle?.querySelector('[data-lang="pt-BR"]');
   const engOption = languageToggle?.querySelector('[data-lang="en"]');
   const ptBrText = ptBrOption?.querySelector('.lang-text');
   const engText = engOption?.querySelector('.lang-text');
 
-  function toggleLanguage() {
-    const currentLang = localStorage.getItem('language') || 'pt-BR';
-    const newLang = currentLang === 'pt-BR' ? 'en' : 'pt-BR';
-    
-    localStorage.setItem('language', newLang);
-    
-    if (ptBrText && engText) {
-      if (newLang === 'pt-BR') {
-        ptBrText.classList.add('current');
-        engText.classList.remove('current');
-      } else {
-        ptBrText.classList.remove('current');
-        engText.classList.add('current');
+  let currentTranslations = {};
+
+  // Fetches translations for the given language
+  async function loadTranslations(lang: string): Promise<Record<string, string>> {
+    try {
+      const response = await fetch(`/locales/${lang}.json`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+      const translations = await response.json() as Record<string, string>;
+      currentTranslations = translations;
+      translatePage();
+      return translations;
+    } catch (error) {
+      console.error('Error loading translation file:', error);
+      currentTranslations = {};
+      return {};
     }
-
-    // Aqui você pode adicionar a lógica de tradução quando implementá-la
-    console.log(`Language changed to: ${newLang}`);
   }
 
-  if (languageToggle) {
-    languageToggle.addEventListener('click', toggleLanguage);
+  // Updates text content of elements with data-translate-key
+  function translatePage() {
+    document.querySelectorAll('[data-translate-key]').forEach(element => {
+      const key = element.getAttribute('data-translate-key');
+      if (key && (currentTranslations as Record<string, string>)[key]) {
+        element.textContent = (currentTranslations as Record<string, string>)[key];
+      }
+    });
   }
 
-  // Initialize language on load
-  const savedLanguage = localStorage.getItem('language') || 'pt-BR';
-  if (savedLanguage === 'en' && ptBrText && engText) {
-    ptBrText.classList.remove('current');
-    engText.classList.add('current');
+  // Updates the UI of the toggle button itself
+  function updateToggleUI(lang: string) {
+    if (!ptBrText || !engText) return;
+    if (lang === 'pt-BR') {
+      ptBrText.classList.add('current');
+      engText.classList.remove('current');
+    } else {
+      ptBrText.classList.remove('current');
+      engText.classList.add('current');
+    }
+  }
+
+  // Sets the language, saves it, updates UI, and loads translations
+  function setLanguage(lang: string) {
+    localStorage.setItem('language', lang);
+    document.documentElement.setAttribute('lang', lang);
+    updateToggleUI(lang);
+    loadTranslations(lang); // Load and apply translations
+  }
+
+  // Add click listeners
+  if (ptBrOption) {
+    ptBrOption.addEventListener('click', () => setLanguage('pt-BR'));
+  }
+  if (engOption) {
+    engOption.addEventListener('click', () => setLanguage('en'));
+  }
+
+  // Initialize on page load
+  function initializeLanguage() {
+    const savedLang = localStorage.getItem('language') || 'pt-BR';
+    document.documentElement.setAttribute('lang', savedLang);
+    updateToggleUI(savedLang);
+    loadTranslations(savedLang); // Load initial translations
+  }
+
+  // Run initialization when the DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeLanguage);
+  } else {
+    initializeLanguage();
   }
 </script>
