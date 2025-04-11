@@ -87,6 +87,15 @@ import LinkPreview from './LinkPreview.astro';
                     >
                       Ver Projeto
                     </a>
+                   <button
+                     class="inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors mt-2 view-details-btn"
+                     data-title={project.title}
+                     data-description={project.description}
+                     data-image={project.image}
+                     data-url={project.url}
+                   >
+                     Ver Detalhes
+                   </button>
                   )}
                 </div>
               </div>
@@ -106,9 +115,19 @@ import LinkPreview from './LinkPreview.astro';
     <img id="lightbox-img" src="" alt="" />
     <div id="lightbox-caption" class="lightbox-caption"></div>
   </div>
+<div id="project-details-modal" class="lightbox-modal" style="display:none;">
+  <div class="lightbox-overlay"></div>
+  <div class="lightbox-content">
+    <button class="lightbox-close" aria-label="Fechar">&times;</button>
+    <h2 id="project-details-title"></h2>
+    <img id="project-details-image" src="" alt="" />
+    <p id="project-details-description"></p>
+    <a id="project-details-link" href="#" target="_blank" rel="noopener noreferrer" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors mt-4">Ver Projeto</a>
+  </div>
+</div>
 </div>
 
-<script type="module" client:load>
+<script type="module" >
   const modal = document.getElementById('lightbox-modal');
   const modalImg = document.getElementById('lightbox-img');
   const modalCaption = document.getElementById('lightbox-caption');
@@ -119,6 +138,52 @@ import LinkPreview from './LinkPreview.astro';
       const imgSrc = btn.getAttribute('data-image');
       const imgTitle = btn.getAttribute('data-title');
       if (modal && modalImg && modalCaption) {
+
+// Project Details Modal Logic
+const detailsModal = document.getElementById('project-details-modal');
+const detailsTitle = document.getElementById('project-details-title');
+const detailsImage = document.getElementById('project-details-image');
+const detailsDescription = document.getElementById('project-details-description');
+const detailsLink = document.getElementById('project-details-link');
+
+function openDetailsModal(title, description, image, url) {
+  if(detailsModal && detailsTitle && detailsImage && detailsDescription && detailsLink) {
+    detailsTitle.textContent = title;
+    detailsDescription.textContent = description;
+    detailsImage.src = image;
+    detailsImage.alt = title;
+    detailsLink.href = url;
+    detailsModal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeDetailsModal() {
+  if(detailsModal) {
+    detailsModal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+}
+
+const detailsCloseBtn = detailsModal?.querySelector('.lightbox-close');
+const detailsOverlay = detailsModal?.querySelector('.lightbox-overlay');
+
+if(detailsCloseBtn) detailsCloseBtn.addEventListener('click', closeDetailsModal);
+if(detailsOverlay) detailsOverlay.addEventListener('click', closeDetailsModal);
+
+document.querySelectorAll('.view-details-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const title = btn.getAttribute('data-title') || '';
+    const description = btn.getAttribute('data-description') || '';
+    const image = btn.getAttribute('data-image') || '';
+    const url = btn.getAttribute('data-url') || '#';
+    openDetailsModal(title, description, image, url);
+  });
+});
+
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape') closeDetailsModal();
+});
         modalImg.src = imgSrc;
         modalImg.alt = imgTitle;
         modalCaption.textContent = imgTitle;
@@ -248,7 +313,7 @@ import LinkPreview from './LinkPreview.astro';
 }
 </style>
 
-<script type="module" client:load>
+<script type="module" >
   // Hide loading overlay when all images are loaded
   const overlay = document.getElementById('projects-loading');
   const imgs = document.querySelectorAll('.project-preview img');

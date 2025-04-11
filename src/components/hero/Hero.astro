@@ -1,11 +1,9 @@
 ---
-import { siteConfig } from '../config/site';
-import LatestPosts from './blog/LatestPosts.astro';
+import { siteConfig } from '../../config/site';
+import LatestPosts from '../blog/LatestPosts.astro';
 ---
 
 <section class="pt-32 pb-16 sm:pb-20">
-<div class="hero-section-content">
-<div id="hero-bg-parallax" style="position:absolute;inset:0;z-index:0;overflow:hidden;width:100%;height:100%;pointer-events:none;"><canvas id="hero-particles" width="1920" height="600" style="width:100%;height:100%;display:block;"></canvas></div>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-12">
       <!-- Hero Content -->
@@ -76,7 +74,6 @@ import LatestPosts from './blog/LatestPosts.astro';
           </div>
       </div>
     </div>
-</div>
   </div>
 </section>
 
@@ -130,86 +127,6 @@ import LatestPosts from './blog/LatestPosts.astro';
 
   typeSkill();
 </script>
-<script>
-  // Parallax effect
-  document.addEventListener('DOMContentLoaded', () => {
-    const parallax = document.getElementById('hero-bg-parallax');
-    window.addEventListener('mousemove', (e) => {
-      if (!parallax) return;
-      const x = (e.clientX / window.innerWidth - 0.5) * 20;
-      const y = (e.clientY / window.innerHeight - 0.5) * 20;
-      parallax.style.transform = `translate(${x}px, ${y}px)`;
-    });
-
-    // Simple interactive particles
-    const canvas = document.getElementById('hero-particles');
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
-      const particles = Array.from({length: 40}, () => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: 2 + Math.random() * 2,
-        dx: (Math.random() - 0.5) * 1.5,
-        dy: (Math.random() - 0.5) * 1.5
-      }));
-      function drawParticles() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (const p of particles) {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, 2 * Math.PI);
-          ctx.fillStyle = 'rgba(0,150,255,0.7)';
-          ctx.fill();
-        }
-      }
-      function updateParticles() {
-        for (const p of particles) {
-          p.x += p.dx;
-          p.y += p.dy;
-          if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-          if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
-        }
-      }
-      function animate() {
-        updateParticles();
-        drawParticles();
-        requestAnimationFrame(animate);
-      }
-      animate();
-      // Mouse interaction
-      canvas.addEventListener('mousemove', (e) => {
-        const rect = canvas.getBoundingClientRect();
-        const mx = e.clientX - rect.left;
-        const my = e.clientY - rect.top;
-        for (const p of particles) {
-          const dx = p.x - mx;
-          const dy = p.y - my;
-          const dist = Math.sqrt(dx*dx + dy*dy);
-          if (dist < 60) {
-            p.dx += dx / dist * 0.2;
-            p.dy += dy / dist * 0.2;
-          }
-        }
-      });
-    }
-  });
-</script>
-<style>
-#hero-bg-parallax {
-  pointer-events: none;
-  z-index: 0;
-}
-#hero-particles {
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  z-index: 0;
-  opacity: 0.7;
-}
-.hero-section-content {
-  position: relative;
-  z-index: 1;
-}
-</style>
-</style>
 
 <style>
 .hero-skills-typing {

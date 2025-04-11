@@ -1,0 +1,12 @@
+---
+import { default as NewsletterSignupComponent } from '../components/NewsletterSignup.astro';
+import { experimental_AstroContainer as AstroContainer } from 'astro/container';
+import '@testing-library/jest-dom';
+import { expect, test } from 'vitest';
+
+test('NewsletterSignup component renders correctly', async () => {
+  const container = await AstroContainer.create();
+  const result = await container.renderToString(NewsletterSignup);
+  expect(result.html).toContain('newsletter-signup');
+  expect(result.html).toContain('Subscribe');
+});
