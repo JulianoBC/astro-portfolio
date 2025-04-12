@@ -122,3 +122,11 @@ Begin check-in process and document analysis.
   - Scripts use placeholder IDs (`G-XXXXXXXXXX` for Google Analytics, `YOUR_HOTJAR_ID` and `YOUR_HJ_VERSION` for Hotjar). Replace these with your actual IDs to enable tracking.
   - Scripts are injected at the end of the `<head>` for site-wide analytics and user behavior tracking.
 - Marked "Implement newsletter signup" as done in FUTURE_IMPROVEMENTS.md (component and test exist).
+### Changed
+- Menu mobile do HeaderNavMenu.astro agora utiliza Alpine.js para controlar abertura/fechamento, removendo o script JS manual e tornando o menu mais declarativo, acessível e responsivo para dispositivos móveis.
+- Overlay e animações do menu mobile agora são controlados por Alpine.js, melhorando a experiência do usuário mobile.
+
+
+### Fixed
+- Fixed import path for `PostPreview.astro` in `src/pages/blog/index.astro` to `../../components/blog/PostPreview.astro` to resolve build error caused by missing file at previous location.
+- Fixed import path for `BlogFeatured.astro` in `src/pages/blog/index.astro` to `../../components/blog/BlogFeatured.astro` to resolve build error caused by missing file at previous location.

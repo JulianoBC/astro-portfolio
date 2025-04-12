@@ -1,11 +1,20 @@
 ---
 import { siteConfig } from "../../config/site";
 ---
-<nav class="nav-menu">
-  <button id="nav-toggle" class="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+<nav class="nav-menu" x-data="{ open: false }">
+  <button
+    class="nav-toggle"
+    aria-label="Abrir menu"
+    :aria-expanded="open ? 'true' : 'false'"
+    @click="open = !open"
+  >
     <span class="hamburger"></span>
   </button>
-  <ul id="nav-list" class="nav-list">
+  <ul
+    class="nav-list"
+    :class="{ 'open': open }"
+    @click.away="open = false"
+  >
     <li>
       <a href="/" class="home-logo">
         <img src="/logo.svg" alt="JBC Logo" class="logo-svg" />
@@ -13,11 +22,17 @@ import { siteConfig } from "../../config/site";
     </li>
     {siteConfig.navigationLinks.map(link => (
       <li>
-        <a href={link.path} data-translate-key={`nav.${link.key}`}>{link.label}</a>
+        <a href={link.path} data-translate-key={`nav.${link.key}`} @click="open = false">{link.label}</a>
       </li>
     ))}
   </ul>
-  <div id="nav-overlay" class="nav-overlay"></div>
+  <div
+    class="nav-overlay"
+    :class="{ 'open': open }"
+    x-show="open"
+    x-transition.opacity
+    @click="open = false"
+  ></div>
 </nav>
 </nav>
 
@@ -155,36 +170,4 @@ import { siteConfig } from "../../config/site";
     }
   }
 </style>
-<script type="module" >
-  const navToggle = document.getElementById('nav-toggle');
-  const navList = document.getElementById('nav-list');
-  const navOverlay = document.getElementById('nav-overlay');
-  function openMenu() {
-    navList.classList.add('open');
-    navOverlay.classList.add('open');
-    navToggle.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeMenu() {
-    navList.classList.remove('open');
-    navOverlay.classList.remove('open');
-    navToggle.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
-  }
-  navToggle?.addEventListener('click', () => {
-    if (navList.classList.contains('open')) {
-      closeMenu();
-    } else {
-      openMenu();
-    }
-  });
-  navOverlay?.addEventListener('click', closeMenu);
-  // Close on Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeMenu();
-  });
-  // Close on navigation
-  navList?.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', closeMenu);
-  });
-</script>
+<!-- Alpine.js controla o menu mobile, não é mais necessário JS manual -->

@@ -38,7 +38,7 @@ This document outlines potential future improvements and enhancements for the As
 ## 🎨 UI/UX
 
 - `[ ]` Add typing animation to hero section skills
-- `[ ]` Implement parallax scroll and interactive particles in hero background
+- `[x]` Implement parallax scroll and interactive particles in hero background
 - `[ ]` Improve avatar responsiveness
 - `[ ]` Add gallery of technologies with tooltips
 - `[ ]` Add preview on project hover
