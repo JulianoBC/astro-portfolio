@@ -229,7 +229,7 @@ const pageTitle = "Contact Me";
             const form = document.getElementById("contact-form");
             const successMsg = document.getElementById("form-success");
 
-            function validateEmail(email: any) {
+            function validateEmail(email: string): boolean {
               return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
             }
 

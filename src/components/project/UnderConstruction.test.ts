@@ -4,6 +4,6 @@ import UnderConstruction from './UnderConstruction.astro';
 
 test('UnderConstruction component renders correctly', async () => {
   const container = await AstroContainer.create();
-  const result = await container.renderToString(UnderConstruction as any);
+  const result = await container.renderToString(UnderConstruction);
   expect(result).toContain('construction-banner');
 });
