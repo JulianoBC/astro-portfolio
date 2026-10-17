@@ -25,7 +25,7 @@ interface SiteConfig {
 
 export const siteConfig: SiteConfig = {
   title: "Juliano BC",
-  description: "Desenvolvedor FullStack que transforma curiosidade em código. Meu maior prazer é aprender coisas novas e aplicar esse conhecimento em soluções reais.",
+  description: "Desenvolvedor FullStack focado em construir sistemas escaláveis, resilientes e de alta performance. Uno evolução técnica contínua e pragmatismo para transformar desafios complexos em soluções eficientes.",
   profileImage: "/perfilfacebook.jpg",
   socialLinks: {
     github: "https://github.com/JulianoBC",
