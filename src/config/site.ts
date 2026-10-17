@@ -34,7 +34,7 @@ export const siteConfig: SiteConfig = {
   navigationLinks: [
     { key: "home", label: "Home", path: "/" },
     { key: "blog", label: "Blog", path: "/blog" },
-    { key: "projects", label: "Projetos", path: "/projects" },
+    { key: "about", label: "Sobre", path: "/#about" },
     { key: "contact", label: "Contato", path: "/contact" }
   ],
   supportedLanguages: [

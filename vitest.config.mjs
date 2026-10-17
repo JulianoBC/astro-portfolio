@@ -1,8 +1,9 @@
-import { defineConfig } from 'vite'
+﻿import { getViteConfig } from 'astro/config';
 
-export default defineConfig({
+export default getViteConfig({
   test: {
-    environment: 'jsdom',
-    include: ['**/*.{test,spec}.?(c|m)[jt]s?(x)', '**/*.test.astro']
+    globals: true,
+    environment: 'node',
+    include: ['src/**/*.test.ts']
   }
-})
+});

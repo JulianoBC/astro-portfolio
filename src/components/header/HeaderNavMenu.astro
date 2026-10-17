@@ -8,24 +8,29 @@ import { siteConfig } from "../../config/site";
     :aria-expanded="open ? 'true' : 'false'"
     @click="open = !open"
   >
-    <span class="hamburger"></span>
+    <span class="hamburger" :class="{ 'is-active': open }"></span>
   </button>
+
   <ul
     class="nav-list"
     :class="{ 'open': open }"
     @click.away="open = false"
   >
-    <li>
-      <a href="/" class="home-logo">
-        <img src="/logo.svg" alt="JBC Logo" class="logo-svg" />
-      </a>
-    </li>
     {siteConfig.navigationLinks.map(link => (
       <li>
-        <a href={link.path} data-translate-key={`nav.${link.key}`} @click="open = false">{link.label}</a>
+        <a 
+          href={link.path} 
+          data-translate-key={`nav.${link.key}`} 
+          @click="open = false"
+          class="nav-item"
+        >
+          {link.label}
+        </a>
       </li>
     ))}
   </ul>
+
+  <!-- Backdrop escurecido no mobile -->
   <div
     class="nav-overlay"
     :class="{ 'open': open }"
@@ -34,126 +39,125 @@ import { siteConfig } from "../../config/site";
     @click="open = false"
   ></div>
 </nav>
-</nav>
 
 <style>
   .nav-menu {
     position: relative;
+    display: flex;
+    align-items: center;
   }
   .nav-list {
     list-style: none;
     display: flex;
-    gap: 2rem;
+    gap: 1.75rem;
     margin: 0;
     padding: 0;
     align-items: center;
-    transition: right 0.3s;
   }
-  .nav-menu a {
-    color: var(--text-primary);
+  .nav-item {
+    color: var(--text-secondary);
     text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s ease;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
     padding: 0.5rem 0;
     position: relative;
   }
-  .nav-menu a::after {
+  .nav-item::after {
     content: '';
     position: absolute;
     width: 0;
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: var(--text-secondary);
-    transition: width 0.3s ease;
+    background-color: var(--text-accent);
+    transition: width 0.25s ease;
+    border-radius: 9999px;
   }
-  .nav-menu a:hover::after {
+  .nav-item:hover {
+    color: var(--text-primary);
+  }
+  .nav-item:hover::after {
     width: 100%;
   }
-  .nav-menu a:hover {
-    color: var(--text-hover);
-  }
-  .home-logo {
-    display: flex;
-    align-items: center;
-    padding: 0;
-    background: none;
-    border: none;
-  }
-  .home-logo:hover {
-    transform: scale(1.1);
-    transition: transform 0.3s ease;
-  }
-  .logo-svg {
-    width: 40px;
-    height: 40px;
-  }
-  .nav-list li:first-child a {
-    padding: 0;
-  }
-  .nav-list li:first-child a:hover {
-    background: none;
-  }
+
   .nav-toggle {
     display: none;
     background: none;
     border: none;
-    position: absolute;
-    left: 0.5rem;
-    top: 0.5rem;
     z-index: 1101;
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s ease;
   }
+  .nav-toggle:hover {
+    background-color: var(--bg-hover);
+  }
+
   .hamburger {
-    width: 28px;
-    height: 3px;
-    background: var(--text-primary, #222);
+    width: 22px;
+    height: 2px;
+    background: var(--text-primary);
     border-radius: 2px;
     position: relative;
     display: block;
-    transition: background 0.3s;
+    transition: all 0.3s ease;
   }
   .hamburger::before,
   .hamburger::after {
     content: '';
     position: absolute;
     left: 0;
-    width: 28px;
-    height: 3px;
-    background: var(--text-primary, #222);
+    width: 22px;
+    height: 2px;
+    background: var(--text-primary);
     border-radius: 2px;
-    transition: transform 0.3s;
+    transition: all 0.3s ease;
   }
   .hamburger::before {
-    top: -9px;
+    top: -7px;
   }
   .hamburger::after {
-    top: 9px;
+    top: 7px;
   }
-  /* Mobile styles */
-  @media (max-width: 900px) {
+
+  .hamburger.is-active {
+    background: transparent;
+  }
+  .hamburger.is-active::before {
+    transform: rotate(45deg);
+    top: 0;
+  }
+  .hamburger.is-active::after {
+    transform: rotate(-45deg);
+    top: 0;
+  }
+
+  /* Mobile Drawer */
+  @media (max-width: 768px) {
     .nav-toggle {
       display: flex;
     }
     .nav-list {
       flex-direction: column;
-      gap: 2.5rem;
+      gap: 1.5rem;
       position: fixed;
       top: 0;
       right: -100vw;
-      width: 80vw;
-      max-width: 320px;
+      width: 75vw;
+      max-width: 300px;
       height: 100vh;
-      background: var(--bg-secondary, #fff);
-      box-shadow: -2px 0 16px rgba(0,0,0,0.08);
-      padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+      background: var(--bg-card);
+      border-left: 1px solid var(--border-color-light);
+      box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+      padding: 5rem 2rem 2rem 2rem;
       z-index: 1100;
       align-items: flex-start;
-      transition: right 0.3s;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .nav-list.open {
       right: 0;
@@ -161,8 +165,12 @@ import { siteConfig } from "../../config/site";
     .nav-overlay {
       display: none;
       position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.3);
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
       z-index: 1099;
     }
     .nav-overlay.open {
@@ -170,4 +178,3 @@ import { siteConfig } from "../../config/site";
     }
   }
 </style>
-<!-- Alpine.js controla o menu mobile, não é mais necessário JS manual -->

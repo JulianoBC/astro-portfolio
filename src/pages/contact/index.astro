@@ -1,122 +1,440 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Header from '../../components/header/Header.astro';
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/header/Header.astro";
 
 const pageTitle = "Contact Me";
 ---
 
 <Layout title={pageTitle}>
   <Header />
+  <!-- Indicador de carregamento de traduções -->
+  <div
+    id="translation-loading"
+    class="translation-loading"
+    style="display:none;"
+  >
+    <div class="loading-spinner"></div>
+    <span>Carregando traduções...</span>
+  </div>
   <main>
     <section class="customer-developer">
-      <h2>Common Problems and Solutions</h2>
+      <h2 data-translate-key="contact.problems.title">
+        Problemas Comuns e Soluções
+      </h2>
       <div class="conversation">
         <div class="customer-problem">
-          <img src="data:image/svg+xml;utf8,<svg width='100' height='100' xmlns='http://www.w3.org/2000/svg'><rect width='100' height='100' fill='#ddd'/><text x='50' y='50' font-size='12' text-anchor='middle' dominant-baseline='middle'>Speed</text></svg>" alt="Website Speed" class="problem-image" />
-          <h3>Problem: My website is slow and losing customers.</h3>
-          <p>I understand the frustration. Slow websites can significantly impact user experience and your bottom line. We can analyze your website's performance, identify bottlenecks, and implement optimizations like image compression, code minification, and leveraging browser caching to speed things up.</p>
+          <div class="problem-icon-container">
+            <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="problem-icon">
+              <defs>
+                <linearGradient id="speedGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#FF6B6B;stop-opacity:1" />
+                  <stop offset="50%" style="stop-color:#FF8E53;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#FF4757;stop-opacity:1" />
+                </linearGradient>
+                <filter id="speedShadow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="rgba(255,107,107,0.4)"/>
+                </filter>
+              </defs>
+              <circle cx="50" cy="50" r="42" fill="url(#speedGradient)" filter="url(#speedShadow)"/>
+              
+              <!-- Velocímetro -->
+              <circle cx="50" cy="50" r="25" fill="none" stroke="white" stroke-width="3" opacity="0.3"/>
+              <circle cx="50" cy="50" r="18" fill="none" stroke="white" stroke-width="2" opacity="0.5"/>
+              
+              <!-- Ponteiro -->
+              <path d="M50 32 L48 50 L52 50 Z" fill="white"/>
+              <circle cx="50" cy="50" r="4" fill="white"/>
+              
+              <!-- Indicadores de velocidade -->
+              <path d="M35 35 L40 40" stroke="white" stroke-width="2" opacity="0.8"/>
+              <path d="M65 35 L60 40" stroke="white" stroke-width="2" opacity="0.8"/>
+              <path d="M75 50 L70 50" stroke="white" stroke-width="2" opacity="0.8"/>
+              
+              <!-- Raios de velocidade -->
+              <path d="M20 45 L30 47" stroke="white" stroke-width="1.5" opacity="0.6"/>
+              <path d="M18 50 L28 50" stroke="white" stroke-width="1.5" opacity="0.6"/>
+              <path d="M20 55 L30 53" stroke="white" stroke-width="1.5" opacity="0.6"/>
+            </svg>
+            <div class="icon-label">VELOCIDADE</div>
+          </div>
+          <h3 data-translate-key="contact.problems.speed.title">
+            Problema: Meu site está lento e perdendo clientes.
+          </h3>
+          <p data-translate-key="contact.problems.speed.description">
+            Entendo a frustração. Sites lentos podem impactar significativamente
+            a experiência do usuário e seus resultados. Podemos analisar a
+            performance do seu site, identificar gargalos e implementar
+            otimizações como compressão de imagens, minificação de código e
+            cache do navegador para acelerar tudo.
+          </p>
         </div>
         <div class="customer-problem">
-          <img src="data:image/svg+xml;utf8,<svg width='100' height='100' xmlns='http://www.w3.org/2000/svg'><rect width='100' height='100' fill='#ddd'/><text x='50' y='50' font-size='12' text-anchor='middle' dominant-baseline='middle'>Store</text></svg>" alt="Online Store" class="problem-image" />
-          <h3>Problem: I need an online store to sell my products.</h3>
-          <p>That's a great step towards expanding your business! I can build a robust and user-friendly e-commerce platform tailored to your specific needs. This includes setting up product catalogs, shopping carts, secure payment gateways, and order management systems.</p>
+          <div class="problem-icon-container">
+            <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="problem-icon">
+              <defs>
+                <linearGradient id="ecommerceGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#00D2D3;stop-opacity:1" />
+                  <stop offset="50%" style="stop-color:#54A0FF;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#5F27CD;stop-opacity:1" />
+                </linearGradient>
+                <filter id="ecommerceShadow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="rgba(0,210,211,0.4)"/>
+                </filter>
+              </defs>
+              <circle cx="50" cy="50" r="42" fill="url(#ecommerceGradient)" filter="url(#ecommerceShadow)"/>
+              
+              <!-- Carrinho de compras -->
+              <path d="M25 30 L30 30 L35 55 L70 55 L75 35 L40 35" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="40" cy="65" r="4" fill="white"/>
+              <circle cx="60" cy="65" r="4" fill="white"/>
+              
+              <!-- Produtos no carrinho -->
+              <rect x="42" y="40" width="8" height="8" rx="1" fill="white" opacity="0.9"/>
+              <rect x="52" y="40" width="8" height="8" rx="1" fill="white" opacity="0.9"/>
+              <rect x="47" y="48" width="8" height="6" rx="1" fill="white" opacity="0.7"/>
+              
+              <!-- Símbolo de dinheiro -->
+              <circle cx="65" cy="25" r="8" fill="white" opacity="0.2"/>
+              <text x="65" y="30" text-anchor="middle" fill="white" font-size="10" font-weight="bold">$</text>
+              
+              <!-- Linhas de movimento -->
+              <path d="M15 25 L20 25" stroke="white" stroke-width="1.5" opacity="0.6"/>
+              <path d="M15 35 L22 35" stroke="white" stroke-width="1.5" opacity="0.6"/>
+              <path d="M15 45 L20 45" stroke="white" stroke-width="1.5" opacity="0.6"/>
+            </svg>
+            <div class="icon-label">E-COMMERCE</div>
+          </div>
+          <h3 data-translate-key="contact.problems.store.title">
+            Problema: Preciso de uma loja online para vender meus produtos.
+          </h3>
+          <p data-translate-key="contact.problems.store.description">
+            Esse é um ótimo passo para expandir seu negócio! Posso construir uma
+            plataforma de e-commerce robusta e amigável, personalizada para suas
+            necessidades específicas. Isso inclui configurar catálogos de
+            produtos, carrinho de compras, gateways de pagamento seguros e
+            sistemas de gerenciamento de pedidos.
+          </p>
         </div>
         <div class="customer-problem">
-          <img src="data:image/svg+xml;utf8,<svg width='100' height='100' xmlns='http://www.w3.org/2000/svg'><rect width='100' height='100' fill='#ddd'/><text x='50' y='50' font-size='12' text-anchor='middle' dominant-baseline='middle'>Mobile</text></svg>" alt="Mobile Devices" class="problem-image" />
-          <h3>Problem: My website doesn't look good on mobile devices.</h3>
-          <p>In today's mobile-first world, having a responsive website is crucial. I can ensure your website adapts seamlessly to different screen sizes, providing an optimal viewing experience for all users, whether they're on a desktop, tablet, or smartphone.</p>
+          <div class="problem-icon-container">
+            <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="problem-icon">
+              <defs>
+                <linearGradient id="responsiveGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#10AC84;stop-opacity:1" />
+                  <stop offset="50%" style="stop-color:#1DD1A1;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#00D2D3;stop-opacity:1" />
+                </linearGradient>
+                <filter id="responsiveShadow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="rgba(16,172,132,0.4)"/>
+                </filter>
+              </defs>
+              <circle cx="50" cy="50" r="42" fill="url(#responsiveGradient)" filter="url(#responsiveShadow)"/>
+              
+              <!-- Desktop -->
+              <rect x="20" y="35" width="25" height="18" rx="2" fill="white" opacity="0.9"/>
+              <rect x="22" y="37" width="21" height="12" fill="rgba(16,172,132,0.3)"/>
+              <rect x="20" y="53" width="25" height="2" rx="1" fill="white" opacity="0.7"/>
+              
+              <!-- Tablet -->
+              <rect x="50" y="30" width="18" height="25" rx="2" fill="white" opacity="0.9"/>
+              <rect x="52" y="32" width="14" height="19" fill="rgba(16,172,132,0.3)"/>
+              <circle cx="59" cy="53" r="1.5" fill="white" opacity="0.7"/>
+              
+              <!-- Mobile -->
+              <rect x="72" y="40" width="12" height="20" rx="2" fill="white" opacity="0.9"/>
+              <rect x="74" y="42" width="8" height="14" fill="rgba(16,172,132,0.3)"/>
+              <circle cx="78" cy="58" r="1" fill="white" opacity="0.7"/>
+              
+              <!-- Conexões responsivas -->
+              <path d="M45 44 Q50 40 50 44" stroke="white" stroke-width="1.5" opacity="0.6" fill="none"/>
+              <path d="M68 50 Q70 45 72 50" stroke="white" stroke-width="1.5" opacity="0.6" fill="none"/>
+              
+              <!-- Ondas de conectividade -->
+              <path d="M15 25 Q25 20 35 25" stroke="white" stroke-width="1" opacity="0.4" fill="none"/>
+              <path d="M15 30 Q25 25 35 30" stroke="white" stroke-width="1" opacity="0.4" fill="none"/>
+            </svg>
+            <div class="icon-label">RESPONSIVO</div>
+          </div>
+          <h3 data-translate-key="contact.problems.mobile.title">
+            Problema: Meu site não fica bom em dispositivos móveis.
+          </h3>
+          <p data-translate-key="contact.problems.mobile.description">
+            No mundo mobile-first de hoje, ter um site responsivo é crucial.
+            Posso garantir que seu site se adapte perfeitamente a diferentes
+            tamanhos de tela, proporcionando uma experiência de visualização
+            otimizada para todos os usuários, seja em desktop, tablet ou
+            smartphone.
+          </p>
         </div>
       </div>
     </section>
 
     <section class="customer-information">
-      <h2>Get in Touch</h2>
-      <p>Let's discuss your project. Please fill out the form below.</p>
-      <form name="contact" method="POST" data-netlify="true" id="contact-form" novalidate>
+      <h2 data-translate-key="contact.form.title">Entre em Contato</h2>
+      <p data-translate-key="contact.form.subtitle">
+        Vamos discutir seu projeto. Por favor, preencha o formulário abaixo.
+      </p>
+      <form
+        name="contact"
+        method="POST"
+        data-netlify="true"
+        id="contact-form"
+        novalidate
+      >
         <input type="hidden" name="form-name" value="contact" />
         <div class="form-group">
-          <label for="name">Your Name</label>
-          <input type="text" id="name" name="name" required aria-required="true" aria-describedby="name-error" />
+          <label for="name" data-translate-key="contact.form.name"
+            >Seu Nome</label
+          >
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            aria-required="true"
+            aria-describedby="name-error"
+          />
           <div class="error-message" id="name-error" aria-live="polite"></div>
         </div>
         <div class="form-group">
-          <label for="email">Your Email</label>
-          <input type="email" id="email" name="email" required aria-required="true" aria-describedby="email-error" />
+          <label for="email" data-translate-key="contact.form.email"
+            >Seu Email</label
+          >
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            aria-required="true"
+            aria-describedby="email-error"
+          />
           <div class="error-message" id="email-error" aria-live="polite"></div>
         </div>
         <div class="form-group">
-          <label for="subject">Subject</label>
-          <input type="text" id="subject" name="subject" required aria-required="true" aria-describedby="subject-error" />
-          <div class="error-message" id="subject-error" aria-live="polite"></div>
-<script>
-// Client-side validation for contact form
-const form = document.getElementById('contact-form');
-const successMsg = document.getElementById('form-success');
+          <label for="subject" data-translate-key="contact.form.subject"
+            >Assunto</label
+          >
+          <input
+            type="text"
+            id="subject"
+            name="subject"
+            required
+            aria-required="true"
+            aria-describedby="subject-error"
+          />
+          <div class="error-message" id="subject-error" aria-live="polite">
+          </div>
+          <script>
+            // Client-side validation for contact form
+            const form = document.getElementById("contact-form");
+            const successMsg = document.getElementById("form-success");
 
-function validateEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
+            function validateEmail(email: any) {
+              return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
 
-if (form) {
-  form.addEventListener('submit', function(e) {
-    let valid = true;
-    // Clear previous errors
-    ['name','email','subject','message'].forEach(id => {
-      const err = document.getElementById(id+'-error');
-      if (err) err.textContent = '';
-    });
-    // Name
-    const name = form.name.value.trim();
-    if (!name) {
-      document.getElementById('name-error').textContent = 'Name is required.';
-      valid = false;
-    }
-    // Email
-    const email = form.email.value.trim();
-    if (!email) {
-      document.getElementById('email-error').textContent = 'Email is required.';
-      valid = false;
-    } else if (!validateEmail(email)) {
-      document.getElementById('email-error').textContent = 'Please enter a valid email.';
-      valid = false;
-    }
-    // Subject
-    const subject = form.subject.value.trim();
-    if (!subject) {
-      document.getElementById('subject-error').textContent = 'Subject is required.';
-      valid = false;
-    }
-    // Message
-    const message = form.message.value.trim();
-    if (!message) {
-      document.getElementById('message-error').textContent = 'Message is required.';
-      valid = false;
-    }
-    if (!valid) {
-      e.preventDefault();
-      return false;
-    }
-    // Show success message (simulate for demo)
-    if (successMsg) {
-      successMsg.style.display = 'block';
-    }
-    // Optionally clear form fields
-    // form.reset();
-  });
-}
-</script>
+            if (form) {
+              form.addEventListener("submit", async function (e) {
+                let valid = true;
+                // Clear previous errors
+                ["name", "email", "subject", "message"].forEach((id) => {
+                  const err = document.getElementById(id + "-error");
+                  if (err) err.textContent = "";
+                });
+                // Get current translations
+                const currentLang =
+                  document.documentElement.getAttribute("lang") || "pt-BR";
+                let translations = {};
+
+                // Load translations synchronously for validation
+                try {
+                  const response = await fetch(`/locales/${currentLang}.json`);
+                  if (response.ok) {
+                    translations = await response.json();
+                  }
+                } catch (error) {
+                  console.error(
+                    "Error loading translations for validation:",
+                    error
+                  );
+                }
+
+                // Helper function to get translated text
+                const t = (key) => translations[key] || key;
+
+                // Name
+                const name = form.name.value.trim();
+                if (!name) {
+                  document.getElementById("name-error").textContent = t(
+                    "contact.form.error.name"
+                  );
+                  valid = false;
+                }
+                // Email
+                const email = form.email.value.trim();
+                if (!email) {
+                  document.getElementById("email-error").textContent = t(
+                    "contact.form.error.email.required"
+                  );
+                  valid = false;
+                } else if (!validateEmail(email)) {
+                  document.getElementById("email-error").textContent = t(
+                    "contact.form.error.email.invalid"
+                  );
+                  valid = false;
+                }
+                // Subject
+                const subject = form.subject.value.trim();
+                if (!subject) {
+                  document.getElementById("subject-error").textContent = t(
+                    "contact.form.error.subject"
+                  );
+                  valid = false;
+                }
+                // Message
+                const message = form.message.value.trim();
+                if (!message) {
+                  document.getElementById("message-error").textContent = t(
+                    "contact.form.error.message"
+                  );
+                  valid = false;
+                }
+                if (!valid) {
+                  e.preventDefault();
+                  return false;
+                }
+                // Show success message (simulate for demo)
+                if (successMsg) {
+                  successMsg.style.display = "block";
+                }
+                // Optionally clear form fields
+                // form.reset();
+              });
+            }
+          </script>
         </div>
         <div class="form-group">
-          <label for="message">Your Message</label>
-          <textarea id="message" name="message" rows="5" required aria-required="true" aria-describedby="message-error"></textarea>
-          <div class="error-message" id="message-error" aria-live="polite"></div>
+          <label for="message" data-translate-key="contact.form.message"
+            >Sua Mensagem</label
+          >
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            required
+            aria-required="true"
+            aria-describedby="message-error"></textarea>
+          <div class="error-message" id="message-error" aria-live="polite">
+          </div>
         </div>
-        <button type="submit" class="btn-primary">Send Message</button>
-        <div id="form-success" class="success-message" style="display:none; margin-top:1rem; color:green;">Thank you! Your message has been sent.</div>
+        <button
+          type="submit"
+          class="btn-primary"
+          data-translate-key="contact.form.submit">Enviar Mensagem</button
+        >
+        <div
+          id="form-success"
+          class="success-message"
+          style="display:none; margin-top:1rem; color:green;"
+          data-translate-key="contact.form.success"
+        >
+          Obrigado! Sua mensagem foi enviada.
+        </div>
       </form>
     </section>
   </main>
 </Layout>
+
+<script>
+  // Simple and robust translation system for contact page
+  let currentTranslations = {};
+
+  // Load and apply translations
+  async function loadAndApplyTranslations(lang) {
+    console.log(`Loading translations for: ${lang}`);
+
+    try {
+      const response = await fetch(`/locales/${lang}.json`);
+      if (response.ok) {
+        currentTranslations = await response.json();
+        console.log(
+          `Loaded ${Object.keys(currentTranslations).length} translation keys`
+        );
+
+        // Apply translations immediately
+        applyTranslations();
+
+        // Update page title
+        updatePageTitle(lang);
+
+        return true;
+      }
+    } catch (error) {
+      console.error("Error loading translations:", error);
+    }
+    return false;
+  }
+
+  // Apply translations to all elements with data-translate-key
+  function applyTranslations() {
+    let count = 0;
+    document.querySelectorAll("[data-translate-key]").forEach((element) => {
+      const key = element.getAttribute("data-translate-key");
+      if (key && currentTranslations[key]) {
+        element.textContent = currentTranslations[key];
+        count++;
+      }
+    });
+    console.log(`Applied ${count} translations`);
+  }
+
+  // Update page title
+  function updatePageTitle(lang) {
+    const titles = {
+      "pt-BR": "Entre em Contato - Juliano BC",
+      en: "Contact Me - Juliano BC",
+    };
+    document.title = titles[lang] || titles["pt-BR"];
+  }
+
+  // Initialize translations when page loads
+  document.addEventListener("DOMContentLoaded", async function () {
+    // Get saved language or default to pt-BR
+    const savedLang = localStorage.getItem("language") || "pt-BR";
+
+    // Set the lang attribute
+    document.documentElement.setAttribute("lang", savedLang);
+
+    // Load and apply translations
+    await loadAndApplyTranslations(savedLang);
+
+    // Listen for language changes from the toggle button
+    document.addEventListener("click", async function (e) {
+      // Check if click was on language toggle
+      const langOption = e.target.closest("[data-lang]");
+      if (langOption) {
+        const newLang = langOption.getAttribute("data-lang");
+        console.log(`Language changed to: ${newLang}`);
+
+        // Update localStorage and DOM
+        localStorage.setItem("language", newLang);
+        document.documentElement.setAttribute("lang", newLang);
+
+        // Load new translations
+        await loadAndApplyTranslations(newLang);
+      }
+    });
+
+    // Also listen for storage changes (if language is changed in another tab)
+    window.addEventListener("storage", async function (e) {
+      if (e.key === "language" && e.newValue) {
+        console.log(`Language changed via storage: ${e.newValue}`);
+        document.documentElement.setAttribute("lang", e.newValue);
+        await loadAndApplyTranslations(e.newValue);
+      }
+    });
+  });
+</script>
 
 <style>
   main {
@@ -152,6 +470,41 @@ if (form) {
     display: flex;
     align-items: center;
     gap: 1.5rem;
+  }
+
+  .problem-icon-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 120px;
+  }
+
+  .problem-icon {
+    width: 100px;
+    height: 100px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    cursor: pointer;
+  }
+
+  .problem-icon:hover {
+    transform: scale(1.1) rotate(5deg);
+    filter: brightness(1.1);
+  }
+
+  .icon-label {
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: var(--text-secondary);
+    text-align: center;
+    letter-spacing: 0.5px;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+  }
+
+  .problem-icon-container:hover .icon-label {
+    opacity: 1;
+    color: var(--text-primary);
   }
 
   .problem-image {
@@ -207,5 +560,108 @@ if (form) {
 
   .btn-primary:hover {
     background-color: #4a90e2;
+  }
+
+  .error-message {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+
+  .success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid #c3e6cb;
+  }
+
+  /* Translation loading indicator */
+  .translation-loading {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
+  }
+
+  .translation-loading.show {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .loading-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--border-color);
+    border-top: 2px solid var(--text-accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Smooth transition for translated content */
+  [data-translate-key] {
+    transition: opacity 0.2s ease;
+  }
+
+  .translating {
+    opacity: 0.7;
+  }
+
+  @media (max-width: 768px) {
+    .customer-problem {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .problem-icon-container {
+      min-width: 100px;
+    }
+
+    .problem-icon {
+      width: 80px;
+      height: 80px;
+    }
+
+    .problem-icon:hover {
+      transform: scale(1.05) rotate(3deg);
+    }
+
+    .icon-label {
+      font-size: 0.7rem;
+    }
+
+    .problem-image {
+      width: 80px;
+      height: 80px;
+    }
+
+    .translation-loading {
+      top: 70px;
+      right: 10px;
+      font-size: 0.8rem;
+      padding: 0.75rem;
+    }
   }
 </style>

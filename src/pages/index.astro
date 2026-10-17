@@ -1,9 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/header/Header.astro';
-import Hero from '../components/Hero.astro';
+import Hero from '../components/hero/Hero.astro';
 import About from '../components/about/About.astro';
-import Projects from '../components/project/Projects.astro';
 import LatestPosts from '../components/blog/LatestPosts.astro';
 import BlogFeatured from '../components/blog/BlogFeatured.astro';
 import { siteConfig } from '../config/site';
@@ -11,8 +10,8 @@ import { siteConfig } from '../config/site';
 
 <Layout title={`${siteConfig.title} - FullStack Web Developer`}>
   <Header title={siteConfig.title} />
-  <main class="pt-24">
-    <div class="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+  <main class="pt-24 flex-1">
+    <div class="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
       <div class="lg:col-span-2">
         <Hero />
       </div>
@@ -24,14 +23,12 @@ import { siteConfig } from '../config/site';
       </div>
     </div>
     <About id="about" />
-    <Projects id="projects" />
   </main>
 </Layout>
 
 <style>
   main {
     margin: 0;
-    padding-top: 6rem;
     width: 100%;
   }
   .blog-content {

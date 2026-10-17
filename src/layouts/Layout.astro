@@ -1,17 +1,16 @@
 ---
 interface Props {
-title: string;
+  title: string;
 }
 
-import { ViewTransitions } from 'astro:transitions';
-import UnderConstruction from '../components/project/UnderConstruction.astro';
 import { siteConfig } from '../config/site';
+import Footer from '../components/footer/Footer.astro';
 
 const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" class={Astro.url.pathname === '/contact' ? 'dark' : ''}>
+<html lang="pt-BR" class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={siteConfig.description} />
@@ -19,36 +18,35 @@ const { title } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-{import.meta.env.PROD && (
-  <>
-    {/* Google Analytics */}
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Script inline para prevenir flash de tema (FOUC) -->
     <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){{dataLayer.push(arguments);}}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      })();
+    
+      if (theme === 'light') {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+      } else {
+        document.documentElement.classList.remove('light');
+        document.documentElement.classList.add('dark');
+      }
+      window.localStorage.setItem('theme', theme);
     </script>
-    {/* End Google Analytics */}
-
-    {/* Hotjar Tracking Code */}
-    <script is:inline>
-      (function(h,o,t,j,a,r){
-        h.hj = h.hj || function(){(h.hj.q = h.hj.q || []).push(arguments)};
-        h._hjSettings = {hjid: 'YOUR_HOTJAR_ID', hjsv: 'YOUR_HJ_VERSION'};
-        a = o.getElementsByTagName('head')[0];
-        r = o.createElement('script'); r.async = 1;
-        r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
-        a.appendChild(r);
-      })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
-    </script>
-    {/* End Hotjar Tracking Code */}
-  </>
-)}
 	</head>
-	<body>
-		<UnderConstruction position="fixed" />
+	<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-300">
 		<slot />
+    <Footer />
 	</body>
 </html>
 

@@ -116,6 +116,25 @@ Begin check-in process and document analysis.
 ---
 
 ## [Unreleased]
+
+## [0.1.0] - 2026-10-16
+
+### Added
+- **Footer Profissional**: Componente global com layout responsivo, links rápidos, redes sociais (GitHub e LinkedIn com ícones SVG), status "Disponível para novos projetos" e botão "Voltar ao Topo" com scroll suave.
+- **Tipografia Moderna**: Integração de Google Fonts com *Plus Jakarta Sans* para textos e *JetBrains Mono* para código e habilidades técnicas.
+- **Hero Badge & Novos CTAs**: Badge com indicador pulsante de disponibilidade e botões direcionados para "Sobre Mim" (#about), "Ver Artigos" (/blog) e "Entre em Contato" (/contact).
+
+### Changed
+- **Paleta Dark Mode Sofisticada**: Transição de fundos pretos estáticos para tons neutros slate/zinc (#0b1120 / #0f172a), bordas sutis translúcidas (gba(255,255,255,0.08)) e tipografia de alto contraste.
+- **Header Glassmorphism**: Cabeçalho fixo com ackdrop-blur-md e transparência suave, unificando a identidade visual ao rolar a página.
+- **Hero Acessibilidade & Canvas**: Verificação estrita de prefers-reduced-motion no canvas de partículas e efeito parallax, otimizando CPU e acessibilidade.
+
+### Fixed
+- **FOUC no Tema**: Script inline de alta prioridade adicionado ao <head> de Layout.astro para carregar imediatamente a preferência do localStorage sem piscadas na tela.
+- **Duplicação de Logotipo**: Removido o logo redundante em HeaderNavMenu.astro, consolidando o HeaderLogo.astro como marca única no desktop e mobile.
+- **Navegação Acidental por Teclado**: Removido o listener de teclas de seta (ArrowLeft / ArrowRight) que trocava de página involuntariamente durante a navegação.
+- **Remoção de Banner Invasivo**: Eliminada a faixa fixa de construção que cobria diagonalmente a tela.
+
 ### Added
 - Initial project setup.
 - Added Google Analytics and Hotjar tracking scripts to `src/layouts/Layout.astro`.
@@ -125,8 +144,18 @@ Begin check-in process and document analysis.
 ### Changed
 - Menu mobile do HeaderNavMenu.astro agora utiliza Alpine.js para controlar abertura/fechamento, removendo o script JS manual e tornando o menu mais declarativo, acessível e responsivo para dispositivos móveis.
 - Overlay e animações do menu mobile agora são controlados por Alpine.js, melhorando a experiência do usuário mobile.
+- ThemeToggle.astro migrado de JavaScript vanilla para Alpine.js, mantendo toda funcionalidade (detecção de preferência do sistema, persistência no localStorage, transições suaves) mas com consistência arquitetural e melhor integração com o resto do projeto.
 
 
 ### Fixed
 - Fixed import path for `PostPreview.astro` in `src/pages/blog/index.astro` to `../../components/blog/PostPreview.astro` to resolve build error caused by missing file at previous location.
 - Fixed import path for `BlogFeatured.astro` in `src/pages/blog/index.astro` to `../../components/blog/BlogFeatured.astro` to resolve build error caused by missing file at previous location.
+- Fixed contact page internationalization: All text content now properly switches between Portuguese and English based on language selection. Added comprehensive translation keys for all contact page elements including form labels, validation messages, and content sections.
+- Enhanced contact page user experience: Added visual loading indicator when switching languages, smooth transitions for translated content, dynamic page title updates, and improved integration with the language toggle system for a more polished multilingual experience.
+- Improved contact page language approach: Changed default content to Portuguese (more appropriate for Brazilian portfolio) with English available via language toggle. Users now see Portuguese content by default and can switch to English if needed, providing a better user experience for the primary audience.
+- Enhanced contact page visual design: Replaced simple placeholder images with professional SVG icons featuring modern gradients, shadows, and hover animations. Created custom icons for "Velocidade" (speedometer), "E-commerce" (shopping cart), and "Responsivo" (multi-device) with smooth transitions and interactive effects that improve the overall visual appeal and user engagement.
+- Implemented blog search functionality: Added real-time search capability to the blog page using Alpine.js. Users can search through post titles, descriptions, and tags with instant results. Features include search results counter, clear search button, no results state, and the featured post is hidden during search to focus on results. Search is case-insensitive and provides smooth user experience with proper loading states.
+- Fixed blog page JavaScript errors: Corrected Alpine.js implementation by properly passing server-side data to client-side script using Astro's define:vars directive. Fixed duplicate x-data declarations, corrected HTML structure issues, and ensured proper separation between server-rendered posts (default view) and client-side filtered results (search mode).
+- Optimized site performance to resolve slow loading issues: Disabled placeholder analytics scripts that were causing failed requests, reduced Hero particle count from 30 to 12, limited particle animation to 30 FPS instead of 60, disabled particles on mobile devices, added 1-second delay before starting animations to prevent blocking initial page load, disabled profile image float animation by default (enabled after page load), and added proper cleanup for intervals and animation frames to prevent memory leaks.
+- Fixed 404 error for missing project images: Created professional SVG placeholder images for projects section. Added `/projects/coming-soon.svg` with animated loading design and `/projects/portfolio.svg` with browser mockup design. Updated all project references to use the new SVG images, eliminating console 404 errors and improving visual consistency across the projects section.
+- Enhanced contact page visual design: Replaced placeholder images with professional SVG icons featuring colorful gradients for each service section (Speed/Velocidade, E-commerce, Mobile/Responsivo). Icons are fully responsive and improve the overall visual appeal and user understanding of services offered.
