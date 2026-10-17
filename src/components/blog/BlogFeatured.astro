@@ -5,24 +5,23 @@ import FeaturedPost from "./FeaturedPost.astro";
 // Get all blog posts
 const posts = await getCollection("blog");
 
-// Get the featured post (in this case, the Portuguese Astro.js post)
-const featuredPost = posts.find((post) => post.id === "por-que-escolher-astro.md");
-
-// If no featured post is found, get the most recent post
-const latestPost = !featuredPost ? posts.sort(
+// Get the featured post (flagship architecture post or most recent)
+const featuredPost = posts.find((post) => post.slug === "arquitetura-offline-first-sqlite-outbox") || posts.sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-)[0] : featuredPost;
+)[0];
 
-// Create the URL for the post
-const postUrl = `/blog/${latestPost.slug}`;
+const postUrl = `/blog/${featuredPost.slug}`;
+const wordCount = (featuredPost.body || '').trim().split(/\s+/).filter(Boolean).length;
+const readingTime = Math.max(1, Math.ceil(wordCount / 200));
 ---
 
-{latestPost && (
+{featuredPost && (
   <FeaturedPost
-    title={latestPost.data.title}
-    description={latestPost.data.description}
-    pubDate={latestPost.data.pubDate}
+    title={featuredPost.data.title}
+    description={featuredPost.data.description}
+    pubDate={featuredPost.data.pubDate}
     url={postUrl}
-    tags={latestPost.data.tags}
+    tags={featuredPost.data.tags}
+    readingTime={readingTime}
   />
 )}

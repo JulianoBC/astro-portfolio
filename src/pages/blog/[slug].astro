@@ -1,6 +1,7 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import LayoutBlog from '../../layouts/LayoutBlog.astro';
+import { siteConfig } from '../../config/site';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -10,105 +11,378 @@ export async function getStaticPaths() {
   }));
 }
 
-interface BlogPostData {
-  title: string;
-  description: string;
-  pubDate: Date;
-  tags: string[];
+interface Props {
+  post: CollectionEntry<'blog'>;
 }
 
-const { post } = Astro.props as { post: { data: BlogPostData; render: () => Promise<{ Content: any }> } };
+const { post } = Astro.props;
 const { Content } = await post.render();
 
+// Cálculo preciso de tempo de leitura (~200 palavras por minuto)
+const wordCount = (post.body || '').trim().split(/\s+/).filter(Boolean).length;
+const readingTime = Math.max(1, Math.ceil(wordCount / 200));
+
+const formattedDate = post.data.pubDate.toLocaleDateString('pt-BR', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
 ---
 
-<LayoutBlog title={post.data.title}>
-  <article class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <header class="mb-12">
-      <h1 class="text-5xl font-bold text-gray-800 dark:text-gray-100 mb-6">
-        <span data-translate-key="blogpost.title">{post.data.title}</span>
-      </h1>
-      <div class="flex items-center gap-4 text-gray-700 dark:text-gray-300 mb-8">
-        <time datetime={post.data.pubDate.toISOString()}>
-          {post.data.pubDate.toLocaleDateString('pt-BR', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })}
+<LayoutBlog title={`${post.data.title} - ${siteConfig.title}`}>
+  <!-- Barra de Progresso de Leitura Fixa no Topo -->
+  <div 
+    id="reading-progress" 
+    class="fixed top-0 left-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400 z-50 transition-all duration-75"
+    style="width: 0%;"
+    aria-hidden="true"
+  ></div>
+
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Navegação Voltar -->
+    <div class="mb-8">
+      <a 
+        href="/blog" 
+        class="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400 transition-colors group"
+      >
+        <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+        </svg>
+        <span>Voltar para todos os artigos</span>
+      </a>
+    </div>
+
+    <!-- Cabeçalho do Artigo -->
+    <header class="mb-12 border-b border-slate-200 dark:border-slate-800 pb-10">
+      
+      <!-- Metadados: Tags, Data e Tempo de Leitura -->
+      <div class="flex flex-wrap items-center gap-2.5 mb-6 text-sm">
+        {post.data.tags && post.data.tags.map((tag: string) => (
+          <span class="bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 text-xs font-semibold px-2.5 py-1 rounded-md border border-blue-200/60 dark:border-blue-800/60">
+            #{tag}
+          </span>
+        ))}
+
+        <span class="text-slate-400 dark:text-slate-600 hidden sm:inline">•</span>
+
+        <!-- Badge de Tempo de Leitura -->
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-800/60">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span>{readingTime} min de leitura</span>
+        </span>
+
+        <span class="text-slate-400 dark:text-slate-600 hidden sm:inline">•</span>
+
+        <!-- Data de Publicação -->
+        <time datetime={post.data.pubDate.toISOString()} class="text-xs font-medium text-slate-500 dark:text-slate-400">
+          {formattedDate}
         </time>
-        •
-        <div class="flex gap-2">
-          {post.data.tags.map((tag: string) => (
-            <span class="bg-blue-100 text-blue-700 text-sm font-medium px-3 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">
-              {tag}
-            </span>
-          ))}
-        </div>
       </div>
-      <div class="border-l-4 border-blue-500 pl-6 mb-12">
-        <p class="text-xl text-gray-700 dark:text-gray-200 leading-relaxed">
-          <span data-translate-key="blogpost.description">{post.data.description}</span>
+
+      <!-- Título Principal -->
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight mb-6">
+        {post.data.title}
+      </h1>
+
+      <!-- Descrição / Lead Callout -->
+      <div class="p-4 sm:p-5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border-l-4 border-blue-600 dark:border-blue-500">
+        <p class="text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed font-normal">
+          {post.data.description}
         </p>
       </div>
     </header>
 
-    <div class="prose dark:prose-invert max-w-none">
+    <!-- Conteúdo do Artigo (Markdown) -->
+    <div id="article-content" class="prose dark:prose-invert max-w-none text-slate-800 dark:text-slate-200">
       <Content />
     </div>
-  </article>
-  
-  <section class="comments-section" style="margin-top: 3rem;">
-    <h2 class="text-2xl font-bold mb-4">Comments</h2>
-    <div class="example-comment" style="border:1px solid #e5e7eb; background:#f9fafb; border-radius:8px; padding:1rem 1.5rem; margin-bottom:1.5rem;">
-      <div style="font-weight:600; margin-bottom:0.25rem;">Example comment:</div>
-      <div style="color:#374151;">
-        <span style="font-weight:500;">Juliano BC:</span> Great post! I learned a lot about Astro and its performance benefits. Looking forward to more articles like this!
+
+    <!-- Seção de Compartilhamento & Ações -->
+    <div class="mt-16 pt-10 border-t border-slate-200 dark:border-slate-800">
+      <div class="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-700/80 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">
+              Gostou deste artigo?
+            </h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">
+              Compartilhe com outros desenvolvedores ou copie o link direto.
+            </p>
+          </div>
+
+          <!-- Botões de Compartilhamento -->
+          <div class="flex flex-wrap items-center gap-3">
+            <!-- Botão Copiar Link -->
+            <button
+              id="copy-link-btn"
+              type="button"
+              class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-600 transition-all hover:-translate-y-0.5 shadow-sm cursor-pointer"
+            >
+              <svg id="copy-link-icon" class="w-4 h-4 text-slate-500 dark:text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+              </svg>
+              <span id="copy-link-text">Copiar Link</span>
+            </button>
+
+            <!-- LinkedIn -->
+            <a
+              id="share-linkedin-btn"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-[#0077b5] hover:bg-[#006396] text-white transition-all hover:-translate-y-0.5 shadow-sm shadow-blue-500/20"
+              aria-label="Compartilhar no LinkedIn"
+            >
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/>
+              </svg>
+              <span>LinkedIn</span>
+            </a>
+
+            <!-- Twitter / X -->
+            <a
+              id="share-twitter-btn"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-slate-900 hover:bg-black text-white dark:bg-slate-700 dark:hover:bg-slate-600 transition-all hover:-translate-y-0.5 shadow-sm"
+              aria-label="Compartilhar no Twitter/X"
+            >
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+              <span>X</span>
+            </a>
+
+            <!-- WhatsApp -->
+            <a
+              id="share-whatsapp-btn"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-[#25D366] hover:bg-[#20ba5a] text-white transition-all hover:-translate-y-0.5 shadow-sm shadow-emerald-500/20"
+              aria-label="Compartilhar no WhatsApp"
+            >
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+              </svg>
+              <span>WhatsApp</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
-    <script src="https://utteranc.es/client.js"
-      repo="OWNER/REPO"
-      issue-term="pathname"
-      label="blog comment"
-      theme="github-light"
-      crossorigin="anonymous"
-      async>
-    </script>
-    <noscript>
-      Please enable JavaScript to view the comments powered by utterances.
-    </noscript>
-  </section>
+
+    <!-- Rodapé de Navegação do Post -->
+    <div class="mt-12 flex items-center justify-between">
+      <a 
+        href="/blog" 
+        class="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+      >
+        ← Voltar para o blog
+      </a>
+
+      <button
+        id="scroll-to-top-post"
+        class="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors cursor-pointer"
+      >
+        <span>Voltar ao topo</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+        </svg>
+      </button>
+    </div>
+
+  </article>
 </LayoutBlog>
 
-<style>
-  .prose {
-    font-size: 1.125rem;
-  }
-  
-  .prose :global(h2) {
-    @apply text-3xl font-bold mt-12 mb-6 border-b pb-2 border-gray-200 dark:border-gray-700;
-  }
-  
-  .prose :global(h3) {
-    @apply text-2xl font-semibold mt-8 mb-4;
-  }
-  
-  .prose :global(p) {
-    @apply text-lg leading-relaxed mb-6;
-  }
-  
-  .prose :global(ul), .prose :global(ol) {
-    @apply my-6 ml-6 space-y-2;
-  }
-  
-  .prose :global(li) {
-    @apply mb-2 leading-relaxed;
-  }
-  
-  .prose :global(strong) {
-    @apply font-semibold;
+<!-- Script Interativo: Barra de Progresso, Copiar Código e Compartilhamento -->
+<script is:inline>
+  function setupReadingExperience() {
+    // 1. Barra de Progresso de Leitura
+    const progressBar = document.getElementById('reading-progress');
+    const article = document.querySelector('article');
+
+    if (progressBar && article) {
+      const updateReadingProgress = () => {
+        const articleBox = article.getBoundingClientRect();
+        const articleTop = window.scrollY + articleBox.top;
+        const articleHeight = article.offsetHeight;
+        const windowHeight = window.innerHeight;
+        const currentScroll = window.scrollY;
+
+        const maxScroll = articleHeight - windowHeight + 150;
+        const scrolled = currentScroll - articleTop;
+
+        if (scrolled <= 0) {
+          progressBar.style.width = '0%';
+        } else if (scrolled >= maxScroll) {
+          progressBar.style.width = '100%';
+        } else {
+          const percentage = Math.min(Math.max((scrolled / maxScroll) * 100, 0), 100);
+          progressBar.style.width = percentage + '%';
+        }
+      };
+
+      window.addEventListener('scroll', updateReadingProgress, { passive: true });
+      updateReadingProgress();
+    }
+
+    // 2. Botão "Copiar Código" nos blocos <pre>
+    const codeBlocks = document.querySelectorAll('#article-content pre');
+    codeBlocks.forEach((pre) => {
+      // Evita duplicar se já foi configurado
+      if (pre.parentElement && pre.parentElement.classList.contains('code-block-wrapper')) {
+        return;
+      }
+
+      // Detecta a linguagem a partir da classe do <code> ou <pre>
+      const codeElement = pre.querySelector('code');
+      let lang = 'CÓDIGO';
+      if (codeElement) {
+        const classes = Array.from(codeElement.classList).concat(Array.from(pre.classList));
+        for (const c of classes) {
+          if (c.startsWith('language-') || c.startsWith('lang-')) {
+            lang = c.replace(/^(language-|lang-)/, '').toUpperCase();
+            break;
+          }
+        }
+      }
+
+      // Cria container estilizado
+      const wrapper = document.createElement('div');
+      wrapper.className = 'code-block-wrapper relative my-6 rounded-xl overflow-hidden border border-slate-700/60 shadow-md bg-[#0f172a]';
+      
+      // Cria a barra superior do bloco de código
+      const topBar = document.createElement('div');
+      topBar.className = 'flex items-center justify-between px-4 py-2 bg-[#1e293b]/90 border-b border-slate-700/60 text-xs text-slate-400 font-mono';
+      
+      // Badge da Linguagem
+      const langBadge = document.createElement('div');
+      langBadge.className = 'flex items-center gap-2 font-semibold text-blue-400';
+      langBadge.innerHTML = `
+        <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+        <span>\${lang}</span>
+      `;
+
+      // Botão de Cópia
+      const copyBtn = document.createElement('button');
+      copyBtn.type = 'button';
+      copyBtn.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-sans font-medium text-slate-300 hover:text-white bg-slate-700/60 hover:bg-slate-700 transition-colors cursor-pointer';
+      copyBtn.innerHTML = `
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+        </svg>
+        <span>Copiar</span>
+      `;
+
+      copyBtn.addEventListener('click', async () => {
+        const textToCopy = (codeElement ? codeElement.innerText : pre.innerText).trim();
+        try {
+          await navigator.clipboard.writeText(textToCopy);
+          copyBtn.innerHTML = `
+            <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span class="text-emerald-400 font-semibold">Copiado!</span>
+          `;
+          copyBtn.classList.add('bg-emerald-950/60', 'border', 'border-emerald-600/50');
+          setTimeout(() => {
+            copyBtn.innerHTML = `
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+              </svg>
+              <span>Copiar</span>
+            `;
+            copyBtn.classList.remove('bg-emerald-950/60', 'border', 'border-emerald-600/50');
+          }, 2000);
+        } catch (err) {
+          console.error('Falha ao copiar:', err);
+        }
+      });
+
+      topBar.appendChild(langBadge);
+      topBar.appendChild(copyBtn);
+
+      // Reorganiza no DOM
+      pre.parentNode.insertBefore(wrapper, pre);
+      wrapper.appendChild(topBar);
+      wrapper.appendChild(pre);
+
+      // Ajusta pre padding e fundo
+      pre.style.margin = '0';
+      pre.style.borderRadius = '0';
+      pre.style.border = 'none';
+      pre.style.padding = '1.25rem 1.5rem';
+    });
+
+    // 3. Compartilhamento Social Dinâmico
+    const currentUrl = window.location.href;
+    const currentTitle = encodeURIComponent(document.title);
+    const encodedUrl = encodeURIComponent(currentUrl);
+
+    const linkedinBtn = document.getElementById('share-linkedin-btn');
+    if (linkedinBtn) {
+      linkedinBtn.href = `https://www.linkedin.com/sharing/share-offsite/?url=\${encodedUrl}`;
+    }
+
+    const twitterBtn = document.getElementById('share-twitter-btn');
+    if (twitterBtn) {
+      twitterBtn.href = `https://twitter.com/intent/tweet?text=\${currentTitle}&url=\${encodedUrl}`;
+    }
+
+    const whatsappBtn = document.getElementById('share-whatsapp-btn');
+    if (whatsappBtn) {
+      whatsappBtn.href = `https://api.whatsapp.com/send?text=\${currentTitle}%20\${encodedUrl}`;
+    }
+
+    // Botão Copiar Link
+    const copyLinkBtn = document.getElementById('copy-link-btn');
+    const copyLinkText = document.getElementById('copy-link-text');
+    const copyLinkIcon = document.getElementById('copy-link-icon');
+
+    if (copyLinkBtn && copyLinkText) {
+      copyLinkBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          copyLinkText.textContent = 'Link Copiado!';
+          copyLinkBtn.classList.add('text-emerald-600', 'dark:text-emerald-400', 'border-emerald-500');
+          setTimeout(() => {
+            copyLinkText.textContent = 'Copiar Link';
+            copyLinkBtn.classList.remove('text-emerald-600', 'dark:text-emerald-400', 'border-emerald-500');
+          }, 2000);
+        } catch (err) {
+          console.error('Falha ao copiar link:', err);
+        }
+      });
+    }
+
+    // 4. Voltar ao Topo
+    const scrollToTopBtn = document.getElementById('scroll-to-top-post');
+    if (scrollToTopBtn) {
+      scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
   }
 
-  .prose :global(blockquote) {
-    @apply italic border-l-4 border-blue-500 pl-4 my-6 text-gray-700 dark:text-gray-300;
+  // Executa no load inicial e em transições de página
+  document.addEventListener('DOMContentLoaded', setupReadingExperience);
+  document.addEventListener('astro:page-load', setupReadingExperience);
+</script>
+
+<style is:global>
+  /* Refinamentos para renderização fluida do conteúdo técnico */
+  .article-content {
+    line-height: 1.85;
+  }
+  .article-content h2 {
+    scroll-margin-top: 6rem;
+  }
+  .article-content h3 {
+    scroll-margin-top: 6rem;
   }
 </style>

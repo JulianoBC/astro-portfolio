@@ -20,72 +20,11 @@ const { title } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <ViewTransitions />
-  </head>
-  <body class="bg-gray-50 dark:bg-gray-900 min-h-screen flex flex-col">
-    <Header title={siteConfig.title} />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <div class="max-w-8xl mx-auto pt-24 flex-1">
-      <aside class="fixed left-0 top-24 w-72 h-screen hidden xl:block p-6">
-        <nav class="space-y-4">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Categorias</h3>
-          <ul class="space-y-2">
-            <li>
-              <a href="/blog/tag/javascript" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
-                JavaScript
-              </a>
-            </li>
-            <li>
-              <a href="/blog/tag/typescript" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
-                TypeScript
-              </a>
-            </li>
-            <li>
-              <a href="/blog/tag/react" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
-                React
-              </a>
-            </li>
-            <li>
-              <a href="/blog/tag/astro" class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
-                Astro
-              </a>
-            </li>
-          </ul>
-        </nav>
-
-        <div class="mt-12">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Newsletter</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-            Receba atualizações sobre novos posts e conteúdos exclusivos.
-          </p>
-          <form class="space-y-2">
-            <input 
-              type="email" 
-              placeholder="Seu email"
-              class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-            />
-            <button 
-              type="submit"
-              class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
-            >
-              Inscrever-se
-            </button>
-          </form>
-        </div>
-      </aside>
-
-      <main class="xl:ml-72 mx-auto max-w-5xl">
-        <article class="prose dark:prose-invert px-4 sm:px-6 lg:px-8 py-8 mx-auto">
-          <slot />
-        </article>
-      </main>
-    </div>
-
-    <Footer />
-
+    <!-- Script inline para prevenir flash de tema (FOUC) -->
     <script is:inline>
       const theme = (() => {
         if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
@@ -99,46 +38,27 @@ const { title } = Astro.props;
     
       if (theme === 'light') {
         document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
       } else {
+        document.documentElement.classList.remove('light');
         document.documentElement.classList.add('dark');
       }
       window.localStorage.setItem('theme', theme);
     </script>
+    <ViewTransitions />
+  </head>
+  <body class="bg-[#f8fafc] dark:bg-[#0b1120] text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-300">
+    <Header title={siteConfig.title} />
+    
+    <main class="flex-1 pt-24 pb-16 w-full">
+      <slot />
+    </main>
+
+    <Footer />
   </body>
 </html>
 
 <style is:global>
   @import '../styles/global.css';
   @import '../styles/blog.css';
-
-  :root {
-    --bg-header: rgba(255, 255, 255, 0.8);
-    --text-primary: #1a202c;
-    --text-secondary: #4a5568;
-    --text-hover: #2563eb;
-    --bg-hover: rgba(37, 99, 235, 0.1);
-  }
-
-  .dark {
-    --bg-header: rgba(17, 24, 39, 0.8);
-    --text-primary: #f7fafc;
-    --text-secondary: #a0aec0;
-    --text-hover: #60a5fa;
-    --bg-hover: rgba(96, 165, 250, 0.1);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg-header: rgba(17, 24, 39, 0.8);
-      --text-primary: #f7fafc;
-      --text-secondary: #a0aec0;
-      --text-hover: #60a5fa;
-      --bg-hover: rgba(96, 165, 250, 0.1);
-    }
-  }
-
-  /* Adjust prose width */
-  .prose {
-    max-width: 80ch !important;
-  }
 </style>
